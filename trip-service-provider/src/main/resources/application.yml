@@ -1,0 +1,51 @@
+logging:
+  level:
+    ROOT: INFO
+    cn.zhangxd.trip.infrastructure: DEBUG
+
+server.port: 8088
+
+spring:
+  # DataSource Config
+  datasource:
+    url: jdbc:mysql://localhost:3306/menu?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: root
+    password: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    max-active: 20
+    initial-size: 1
+    min-idle: 3
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 'x' FROM DUAL
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+  redis:
+    database: 0
+    host: localhost
+    #password: # Login password of the redis server.
+    port: 6379
+    timeout: 0
+    pool:
+      max-active: 8 #最大连接数
+      max-idle: 8 #最大空闲连接数
+      max-wait: -1 #最大等待时间
+      min-idle: 0 #初始化连接数
+  data:
+    mongodb:
+      database: test # Database name.
+      host: localhost # Mongo server host.
+      port: 27017 # Mongo server port.
+
+  # JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    database: MYSQL
+    show-sql: true
