@@ -17,7 +17,7 @@ public class MyBatisMapperScannerConfig {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("cn.zhangxd.trip.infrastructure.repo");
+        mapperScannerConfigurer.setBasePackage("cn.zhangxd.trip.infrastructure.mapper");
         mapperScannerConfigurer.setAnnotationClass(MyBatisDao.class);
         return mapperScannerConfigurer;
     }

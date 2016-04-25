@@ -1,4 +1,4 @@
-package cn.zhangxd.trip.infrastructure.repo;
+package cn.zhangxd.trip.infrastructure.mapper;
 
 
 import cn.zhangxd.trip.infrastructure.config.CrudDao;

@@ -46,4 +46,3 @@ spring:
       ddl-auto: update
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
     database: MYSQL
-    show-sql: true

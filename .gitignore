@@ -139,6 +139,8 @@ Icon
 .AppleDesktop
 Network Trash Folder
 Temporary Items
+/service_provider.properties
+/service_provider.properties.lock
 .apdisk
 ### Java template
 *.class

@@ -1,7 +1,7 @@
 package cn.zhangxd.trip.service.provider.serviceImpl;
 
 import cn.zhangxd.trip.infrastructure.entity.User;
-import cn.zhangxd.trip.infrastructure.repo.UserMapper;
+import cn.zhangxd.trip.infrastructure.mapper.UserMapper;
 import cn.zhangxd.trip.service.api.service.IUserService;
 import cn.zhangxd.trip.service.api.vo.UserVo;
 import com.alibaba.dubbo.config.annotation.Service;

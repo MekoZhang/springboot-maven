@@ -1,9 +1,6 @@
 package cn.zhangxd.trip.infrastructure.entity.base;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -15,6 +12,7 @@ public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(generator = "UUID")
     private Long id;
 
     public Long getId() {
