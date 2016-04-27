@@ -26,7 +26,6 @@ spring:
   redis:
     database: 0
     host: localhost
-    #password: # Login password of the redis server.
     port: 6379
     timeout: 0
     pool:
@@ -39,10 +38,3 @@ spring:
       database: test # Database name.
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.
-
-  # JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
-  jpa:
-    hibernate:
-      ddl-auto: update
-      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    database: MYSQL

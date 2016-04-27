@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.infrastructure.repo.impl;
 
-import cn.zhangxd.trip.infrastructure.entity.User;
+import cn.zhangxd.trip.infrastructure.entity.TripUser;
 import cn.zhangxd.trip.infrastructure.repo.IMongoDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +22,16 @@ public class MongoDaoImpl implements IMongoDao {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<User> findUsers() {
-        User a = new User();
-        a.setId(123l);
-        User b = new User();
-        b.setId(456l);
+    public List<TripUser> findUsers() {
+        TripUser a = new TripUser();
+//        a.setId(123l);
+        TripUser b = new TripUser();
+//        b.setId(456l);
         mongoTemplate.save(a);
         mongoTemplate.save(b);
 
         logger.info("mongoDao");
-        for (User user : mongoTemplate.findAll(User.class)) {
+        for (TripUser user : mongoTemplate.findAll(TripUser.class)) {
             System.out.println(user.getId());
         }
         return null;

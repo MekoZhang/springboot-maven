@@ -37,7 +37,7 @@ public interface CrudDao<T> extends BaseDao {
      * @return List<T>
      */
     List<T> findList(T entity, RowBounds rowBounds);
-	
+
 
 	/**
 	 * 插入数据

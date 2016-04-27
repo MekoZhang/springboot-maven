@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by zhangxd on 16/4/18.
  */
-public interface IUserService {
+public interface UserService {
 
     List<UserVo> findUser();
 }

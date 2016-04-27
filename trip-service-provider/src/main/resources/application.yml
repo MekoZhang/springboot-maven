@@ -1,9 +1,7 @@
 logging:
   level:
     ROOT: INFO
-    cn.zhangxd.trip.infrastructure: DEBUG
-
-server.port: 8088
+#    cn.zhangxd.trip.infrastructure: DEBUG
 
 spring:
   # DataSource Config
@@ -41,11 +39,3 @@ spring:
       database: test # Database name.
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.
-
-  # JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
-  jpa:
-    hibernate:
-      ddl-auto: update
-      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
-    database: MYSQL
-    show-sql: true

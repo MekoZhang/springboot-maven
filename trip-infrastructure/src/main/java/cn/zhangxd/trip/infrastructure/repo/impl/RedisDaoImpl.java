@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.infrastructure.repo.impl;
 
-import cn.zhangxd.trip.infrastructure.entity.User;
+import cn.zhangxd.trip.infrastructure.entity.TripUser;
 import cn.zhangxd.trip.infrastructure.repo.IRedisDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class RedisDaoImpl implements IRedisDao {
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public List<User> findUsers() {
+    public List<TripUser> findUsers() {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
 
         String key = "spring.boot.redis.test";

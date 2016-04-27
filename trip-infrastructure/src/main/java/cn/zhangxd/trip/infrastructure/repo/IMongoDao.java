@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.infrastructure.repo;
 
-import cn.zhangxd.trip.infrastructure.entity.User;
+import cn.zhangxd.trip.infrastructure.entity.TripUser;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface IMongoDao {
 
-    List<User> findUsers();
+    List<TripUser> findUsers();
 
 }

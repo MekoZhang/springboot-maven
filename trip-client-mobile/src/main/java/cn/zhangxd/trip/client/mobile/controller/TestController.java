@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.client.mobile.controller;
 
-import cn.zhangxd.trip.service.api.service.IUserService;
+import cn.zhangxd.trip.service.api.service.UserService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 	
     @Reference
-	private IUserService userService;
+	private UserService userService;
 	
 	@RequestMapping("/hello")
 	public String hello(String name) {
