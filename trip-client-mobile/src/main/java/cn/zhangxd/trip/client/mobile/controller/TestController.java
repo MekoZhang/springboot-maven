@@ -1,19 +1,20 @@
 package cn.zhangxd.trip.client.mobile.controller;
 
-import cn.zhangxd.trip.service.api.service.UserService;
+import cn.zhangxd.trip.client.mobile.common.controller.BaseController;
+import cn.zhangxd.trip.service.api.service.TripUserService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestController {
+public class TestController extends BaseController {
 	
     @Reference
-	private UserService userService;
+	private TripUserService tripUserService;
 	
 	@RequestMapping("/hello")
-	public String hello(String name) {
-		System.out.println("==========" +  (userService == null) + userService.findUser().size());
+	public String hello(String name) throws Exception {
+		System.out.println("==========" +  (tripUserService == null) + tripUserService.findUserByLogin(name));
 		return "Hello: " + name;
 	}
 

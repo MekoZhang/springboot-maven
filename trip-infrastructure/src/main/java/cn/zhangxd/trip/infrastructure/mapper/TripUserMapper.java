@@ -3,13 +3,11 @@ package cn.zhangxd.trip.infrastructure.mapper;
 
 import cn.zhangxd.trip.infrastructure.config.CrudDao;
 import cn.zhangxd.trip.infrastructure.config.annotation.MyBatisDao;
-import cn.zhangxd.trip.infrastructure.entity.TripUser;
-
-import java.util.List;
+import cn.zhangxd.trip.infrastructure.entity.TripUserPo;
 
 @MyBatisDao
-public interface TripUserMapper extends CrudDao<TripUser> {
+public interface TripUserMapper extends CrudDao<TripUserPo> {
 
-	List<TripUser> findUsersLike(String name);
+	TripUserPo findByLogin(String login);
 
 }

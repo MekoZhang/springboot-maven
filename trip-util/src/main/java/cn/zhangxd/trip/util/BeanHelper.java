@@ -1,5 +1,8 @@
 package cn.zhangxd.trip.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +10,9 @@ import java.util.List;
 /**
  * 复杂对象与简单对象转换工具类(通常用于 Po 转 Vo)
  */
-public class ChangeReflection {
+public class BeanHelper {
+
+    private static Logger logger = LoggerFactory.getLogger(BeanHelper.class);
 
     /**
      * 将源对象的值，放到与目标对象属性相同的值里面
@@ -19,6 +24,9 @@ public class ChangeReflection {
      */
     @SuppressWarnings("rawtypes")
     public static Object changeProValue(Class sourceClass, Class targetClass, Object sourceObj) {
+        if (sourceObj  == null) {
+            return null;
+        }
         try {
             Object ret = targetClass.newInstance();
             Field[] target = targetClass.getDeclaredFields();
@@ -36,7 +44,7 @@ public class ChangeReflection {
             }
             return ret;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("对象转换异常", e);
         }
 
         return sourceObj;

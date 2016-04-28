@@ -2,7 +2,7 @@ package cn.zhangxd.trip.infrastructure.entity;
 
 import cn.zhangxd.trip.infrastructure.entity.base.BaseEntity;
 
-public class TripUser extends BaseEntity {
+public class TripUserPo extends BaseEntity {
 
     private String name;
     private String login;
