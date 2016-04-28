@@ -1,14 +1,18 @@
 package cn.zhangxd.trip.client.mobile.security;
 
+import cn.zhangxd.trip.service.api.service.TripUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -26,26 +30,31 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  * Created by zhangxd on 16/3/17.
  * <p>
  * 1.请求token
- * curl -X POST -vu apiClient:12345 http://localhost:8081/oauth/token -H "Accept: application/json" -d "password=spring&username=roy&grant_type=password&scope=api%20read%20write"
+ * curl -X POST -vu api:12345 http://localhost:8081/oauth/token -H "Accept: application/json" -d "password=spring&username=roy&grant_type=password&scope=read%20write"
  * 2.使用token请求
- * curl -i -H "Authorization: Bearer 105e56d2-f29b-4dec-bcf5-15dde21e8a95" http://localhost:8081/hello\?name\=123
+ * curl -i -H "Authorization: Bearer 105e56d2-f29b-4dec-bcf5-15dde21e8a95" http://localhost:8081/hello?name=123
  * 3.刷新token
- * curl -X POST -vu apiClient:12345 http://localhost:8081/oauth/token -H "Accept: application/json" -d "grant_type=refresh_token&refresh_token=18198e43-64bd-40b3-883b-6b88a21ea21c"
+ * curl -X POST -vu api:12345 http://localhost:8081/oauth/token -H "Accept: application/json" -d "grant_type=refresh_token&refresh_token=18198e43-64bd-40b3-883b-6b88a21ea21c"
+ * 4.登出
+ * curl -i -H "Authorization: Bearer 7ccda303-ac2f-4c6d-b249-7d1185d6c1ab" http://localhost:8081/oauth/logout
+ * </p>
  */
 @Configuration
 public class OAuth2ServerConfig {
 
-    private static final String RESOURCE_ID_API = "api_service";
+    private static final String RESOURCE_ID_API = "trip_resource";
+
+    private static final String ROLE_USER = "USER";
 
     @Configuration
     @EnableResourceServer
     protected static class ApiResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-//        @Autowired
-//        private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-//
-//        @Autowired
-//        private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+        @Autowired
+        private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+        @Autowired
+        private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -58,12 +67,20 @@ public class OAuth2ServerConfig {
             http
                     .authorizeRequests()
                     .anyRequest().authenticated()
+                    .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(customAuthenticationEntryPoint)
+                    .and()
+                    .logout()
+                    .logoutUrl("/oauth/logout")
+                    .logoutSuccessHandler(customLogoutSuccessHandler)
             ;
         }
     }
 
     @Configuration
     @EnableAuthorizationServer
+    @EnableConfigurationProperties(AuthorizationProperties.class)
     protected static class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
         @Autowired
@@ -72,6 +89,9 @@ public class OAuth2ServerConfig {
 
         @Autowired
         private RedisConnectionFactory redisConnectionFactory;
+
+        @Autowired
+        private AuthorizationProperties authorizationProperties;
 
         @Bean
         public RedisTokenStoreSerializationStrategy redisTokenStoreSerializationStrategy() {
@@ -90,19 +110,19 @@ public class OAuth2ServerConfig {
             // 定义了客户端细节服务
             clients
                     .inMemory()
-                    .withClient("apiClient")
-                    .authorizedGrantTypes("password", "refresh_token")
-                    .authorities("USER")
-                    .scopes("api", "read", "write")
+                    .withClient(authorizationProperties.getClientId())
+                    .secret(authorizationProperties.getClientSecret())
+                    .authorizedGrantTypes(authorizationProperties.getAuthorizedGrantTypes())
+                    .authorities(ROLE_USER)
+                    .scopes(authorizationProperties.getScope())
                     .resourceIds(RESOURCE_ID_API)
-                    .secret("12345")
-                    .accessTokenValiditySeconds(3600) // 1 hour
-                    .refreshTokenValiditySeconds(2592000) // 30 days
+                    .accessTokenValiditySeconds(authorizationProperties.getAccessTokenValiditySeconds())
+                    .refreshTokenValiditySeconds(authorizationProperties.getRefreshTokenValiditySeconds())
             ;
         }
 
         @Autowired
-        private UserDetailsService userDetailsService;
+        private TripUserService tripUserService;
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -110,7 +130,7 @@ public class OAuth2ServerConfig {
             endpoints
                     .tokenStore(this.tokenStore())
                     .authenticationManager(this.authenticationManager)
-                    .userDetailsService(this.userDetailsService)
+                    .userDetailsService(this.tripUserService)
             ;
         }
 

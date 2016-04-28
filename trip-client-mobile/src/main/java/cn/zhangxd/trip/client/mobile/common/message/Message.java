@@ -1,7 +1,7 @@
 package cn.zhangxd.trip.client.mobile.common.message;
 
 /**
- * 后台与前台传输的数据格式
+ * 接口传输的数据格式
  * Created by zhangxd on 16/3/13.
  */
 public class Message {

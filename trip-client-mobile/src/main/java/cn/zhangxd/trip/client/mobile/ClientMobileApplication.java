@@ -14,7 +14,7 @@ import javax.servlet.ServletException;
 
 @SpringBootApplication
 @ImportResource("classpath:bubbo-consumer.xml")
-public class Application extends SpringBootServletInitializer {
+public class ClientMobileApplication extends SpringBootServletInitializer {
 
     @Bean
     public ServletContextInitializer servletContextInitializer() {
@@ -28,10 +28,10 @@ public class Application extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(Application.class); // 以 war 包形式发布时需要此设置
+        return builder.sources(ClientMobileApplication.class); // 以 war 包形式发布时需要此设置
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ClientMobileApplication.class, args);
     }
 }

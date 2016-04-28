@@ -1,18 +1,18 @@
 package cn.zhangxd.trip.client.mobile.common.interceptor;
 
 import cn.zhangxd.trip.util.DateHelper;
-import cn.zhangxd.trip.util.Dto;
-import cn.zhangxd.trip.util.WebHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.Enumeration;
 
 /**
  * 日志拦截器
@@ -30,11 +30,43 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         if (logger.isDebugEnabled()) {
-            Dto dto = WebHelper.getRequestMap(request);
+            String contentType = request.getContentType();
+            String reqData;
+            if ("application/json".equalsIgnoreCase(contentType)) {
+                int contentLength = request.getContentLength();
+                byte buffer[] = new byte[contentLength];
+                for (int i = 0; i < contentLength; ) {
+                    int length = request.getInputStream().read(buffer, i, contentLength - i);
+                    if (length == -1) {
+                        break;
+                    }
+                    i += length;
+                }
+                reqData = new String(buffer);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                // 必须这么些，其他方式遍历不出来
+                for (Object key : request.getParameterMap().keySet()) {
+                    sb.append(key.toString()).append("=")
+                            .append(ServletRequestUtils.getStringParameter(request, key.toString(), "")).append(";");
+                }
+                reqData = sb.toString();
+            }
+
+            Enumeration e = request.getHeaderNames();
+            String reqHeader = "";
+            StringBuilder sb = new StringBuilder();
+            while (e.hasMoreElements()) {
+                String headValue = (String) e.nextElement();
+                String value = request.getHeader(headValue);
+                sb.append(headValue).append("=").append(value).append(";");
+                reqHeader = sb.toString();
+            }
+
             long beginTime = System.currentTimeMillis();//1、开始时间
             startTimeThreadLocal.set(beginTime);        //线程绑定变量（该数据只有当前请求的线程可见）
-            logger.debug("开始计时: {}  URI: {} 请求参数: {}", new SimpleDateFormat("hh:mm:ss.SSS")
-                    .format(beginTime), request.getRequestURI(), dto);
+            logger.debug("开始计时: {}  URI: {} 请求参数: {} 请求头: {}", new SimpleDateFormat("hh:mm:ss.SSS")
+                    .format(beginTime), request.getRequestURI(), reqData, reqHeader);
         }
         return true;
     }

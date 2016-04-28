@@ -17,3 +17,12 @@ logging:
   level:
     ROOT: INFO
     cn.zhangxd.trip.client.mobile: DEBUG
+
+security:
+  oauth2:
+    client-id: api
+    client-secret: 12345
+    scope: read,write
+    authorized-grant-types: password,refresh_token
+    access-token-validity-seconds: 3600 #1 hour
+    refresh-token-validity-seconds: 2592000 #30 days

@@ -17,10 +17,10 @@ import java.io.IOException;
 @EnableScheduling //启用定时任务
 @EnableTransactionManagement //启用事务
 @ImportResource("classpath:dubbo-provider.xml")
-public class Application {
+public class ProviderApplication {
 
     public static void main(String[] args) throws IOException {
-        SpringApplication application = new SpringApplication(Application.class);
+        SpringApplication application = new SpringApplication(ProviderApplication.class);
         application.setRegisterShutdownHook(false);
         application.setBannerMode(Banner.Mode.OFF);
         application.run(args);
