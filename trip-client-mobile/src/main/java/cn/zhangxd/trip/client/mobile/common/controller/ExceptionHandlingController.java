@@ -5,9 +5,6 @@ import cn.zhangxd.trip.service.api.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,13 +26,6 @@ public class ExceptionHandlingController {
     @ResponseBody
     public Message businessErrorHandler(BusinessException ex) {
         return new Message(ex.getCode(), env.getProperty(Objects.toString(ex.getCode())));
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseBody
-    public ResponseEntity<Message> accessDeniedException() {
-        Message message = new Message(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
-        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 
 }

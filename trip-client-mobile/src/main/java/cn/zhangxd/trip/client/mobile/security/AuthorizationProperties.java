@@ -33,19 +33,19 @@ public class AuthorizationProperties {
     }
 
     public String[] getScope() {
-        return scope;
+        return scope.clone();
     }
 
     public void setScope(String[] scope) {
-        this.scope = scope;
+        this.scope = scope.clone();
     }
 
     public String[] getAuthorizedGrantTypes() {
-        return authorizedGrantTypes;
+        return authorizedGrantTypes.clone();
     }
 
     public void setAuthorizedGrantTypes(String[] authorizedGrantTypes) {
-        this.authorizedGrantTypes = authorizedGrantTypes;
+        this.authorizedGrantTypes = authorizedGrantTypes.clone();
     }
 
     public Integer getAccessTokenValiditySeconds() {

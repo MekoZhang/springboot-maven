@@ -12,11 +12,14 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 
 @Repository
 public class RedisRepo {
+
+    private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
     @Resource(name = "redisTemplate")
     private RedisTemplate<String, String> redisTemplate;
@@ -135,7 +138,12 @@ public class RedisRepo {
             public List<String> doInRedis(RedisConnection connection) throws DataAccessException {
                 Set<String> keys = redisTemplate.keys(key + "*");
                 for (String key : keys) {
-                    Long ttl = connection.ttl(key.getBytes());
+                    Long ttl = -1l;
+                    try {
+                        ttl = connection.ttl(key.getBytes(DEFAULT_URL_ENCODING));
+                    } catch (UnsupportedEncodingException e) {
+                        logger.error("willExpire", e);
+                    }
                     if (0 <= ttl && ttl <= 2 * time) {
                         keysList.add(key);
                     }
@@ -274,7 +282,12 @@ public class RedisRepo {
     public boolean exists(final String key) throws Exception {
         return redisTemplate.execute(new RedisCallback<Boolean>() {
             public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
-                return connection.exists((key).getBytes());
+                try {
+                    return connection.exists((key).getBytes(DEFAULT_URL_ENCODING));
+                } catch (UnsupportedEncodingException e) {
+                    logger.error("exists", e);
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -288,7 +301,11 @@ public class RedisRepo {
             public Long doInRedis(RedisConnection connection) throws DataAccessException {
                 long result = 0;
                 for (String key : keys) {
-                    result = connection.del((key).getBytes());
+                    try {
+                        result = connection.del((key).getBytes(DEFAULT_URL_ENCODING));
+                    } catch (UnsupportedEncodingException e) {
+                        logger.error("del", e);
+                    }
                 }
                 return result;
             }

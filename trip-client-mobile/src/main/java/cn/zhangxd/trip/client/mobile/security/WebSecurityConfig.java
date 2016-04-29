@@ -36,14 +36,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ;
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        //忽略权限校验的访问路径
-        web
-                .ignoring()
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        //忽略权限校验的访问路径
+//        web
+//                .ignoring()
 //                .antMatchers("/hello")
-        ;
-    }
+//        ;
+//    }
 
     @Override
     @Bean

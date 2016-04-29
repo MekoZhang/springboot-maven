@@ -23,6 +23,8 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
+    private static final String DEFAULT_URL_ENCODING = "UTF-8";
+
     private static final ThreadLocal<Long> startTimeThreadLocal =
             new NamedThreadLocal<>("ThreadLocal StartTime");
 
@@ -42,7 +44,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
                     }
                     i += length;
                 }
-                reqData = new String(buffer);
+                reqData = new String(buffer, DEFAULT_URL_ENCODING);
             } else {
                 StringBuilder sb = new StringBuilder();
                 // 必须这么些，其他方式遍历不出来

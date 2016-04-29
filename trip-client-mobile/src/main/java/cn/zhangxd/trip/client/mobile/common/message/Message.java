@@ -28,30 +28,33 @@ public class Message {
     }
 
     public Date getNow() {
-        return new Date();
+        return (Date) now.clone();
     }
 
     public Message() {
         this.code = HttpStatus.OK.value();
         this.msg = "";
+        this.data = "";
+        this.now = new Date();
     }
 
     public Message(int code, String message) {
         this.code = code;
         this.msg = message;
         this.data = "";
+        this.now = new Date();
     }
 
     public Message(int code, String message, Object data) {
         this.code = code;
         this.msg = message;
         this.data = data;
+        this.now = new Date();
     }
 
     public void setMsg(int code, String message) {
         this.code = code;
         this.msg = message;
-        this.data = "";
     }
 
     public void setMsg(int code, String message, Object data) {
@@ -61,8 +64,6 @@ public class Message {
     }
 
     public void setMsg(Object data) {
-        this.code = HttpStatus.OK.value();
-        this.msg = "";
         this.data = data;
     }
 
