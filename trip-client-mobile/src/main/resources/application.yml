@@ -24,5 +24,5 @@ security:
     client-secret: 12345
     scope: read,write
     authorized-grant-types: password,refresh_token
-    access-token-validity-seconds: 3600 #1 hour
+    access-token-validity-seconds: 43200 #12 hours
     refresh-token-validity-seconds: 2592000 #30 days

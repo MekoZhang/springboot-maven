@@ -6,31 +6,22 @@ package cn.zhangxd.trip.service.api.exception;
  */
 public class BusinessException extends Exception implements IBaseException {
 
-    private static final long serialVersionUID = 1L;
-
-    private String code;
+    private int code;
 
     public BusinessException() {
     }
 
-    public BusinessException(String code, String message) {
-        this(message);
+    public BusinessException(int code) {
         this.code = code;
     }
 
-    public BusinessException(String message) {
+    public BusinessException(int code, String message) {
         super(message);
+        this.code = code;
     }
 
-    public BusinessException(Throwable cause) {
-        super(cause);
-    }
-
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public String getCode() {
+    public int getCode() {
         return code;
     }
+
 }

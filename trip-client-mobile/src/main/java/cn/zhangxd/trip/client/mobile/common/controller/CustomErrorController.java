@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,7 +32,11 @@ public class CustomErrorController extends BasicErrorController {
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         Map<String, Object> body = this.getErrorAttributes(request, this.isIncludeStackTrace(request, MediaType.ALL));
         HttpStatus status = this.getStatus(request);
-        return new ResponseEntity<>(body, status);
+        Map<String, Object> message = new HashMap<>();
+        message.put("code", status.value());
+        message.put("data", body.get("error"));
+        message.put("now", body.get("timestamp"));
+        return new ResponseEntity<>(message, status);
     }
 
 }

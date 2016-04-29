@@ -6,6 +6,6 @@ package cn.zhangxd.trip.service.api.exception;
  */
 public interface IBaseException {
 
-    String getCode();
+    int getCode();
 
 }

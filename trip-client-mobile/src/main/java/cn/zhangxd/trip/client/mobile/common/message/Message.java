@@ -1,5 +1,9 @@
 package cn.zhangxd.trip.client.mobile.common.message;
 
+import org.springframework.http.HttpStatus;
+
+import java.util.Date;
+
 /**
  * 接口传输的数据格式
  * Created by zhangxd on 16/3/13.
@@ -7,45 +11,58 @@ package cn.zhangxd.trip.client.mobile.common.message;
 public class Message {
 
     private int code;
-    private String message;
+    private String msg;
     private Object data;
+    private Date now;
 
     public int getCode() {
         return code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
     public Object getData() {
         return data;
     }
 
-    public Message() {
+    public Date getNow() {
+        return new Date();
+    }
 
+    public Message() {
+        this.code = HttpStatus.OK.value();
+        this.msg = "";
     }
 
     public Message(int code, String message) {
         this.code = code;
-        this.message = message;
+        this.msg = message;
+        this.data = "";
     }
 
     public Message(int code, String message, Object data) {
         this.code = code;
-        this.message = message;
+        this.msg = message;
         this.data = data;
     }
 
     public void setMsg(int code, String message) {
         this.code = code;
-        this.message = message;
-        this.data = "no data";
+        this.msg = message;
+        this.data = "";
     }
 
     public void setMsg(int code, String message, Object data) {
         this.code = code;
-        this.message = message;
+        this.msg = message;
+        this.data = data;
+    }
+
+    public void setMsg(Object data) {
+        this.code = HttpStatus.OK.value();
+        this.msg = "";
         this.data = data;
     }
 

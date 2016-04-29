@@ -54,9 +54,6 @@ public class OAuth2ServerConfig {
     protected static class ApiResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         @Autowired
-        private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
-        @Autowired
         private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
         @Override
@@ -70,9 +67,6 @@ public class OAuth2ServerConfig {
             http
                     .authorizeRequests()
                     .anyRequest().authenticated()
-                    .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(customAuthenticationEntryPoint)
                     .and()
                     .logout()
                     .logoutUrl("/oauth/logout")

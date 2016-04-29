@@ -39,6 +39,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry
                 .addInterceptor(logInterceptor())
                 .addPathPatterns("/**")
+                .excludePathPatterns("/error")
         ;
     }
 

@@ -53,16 +53,16 @@ public class JsonMapper extends ObjectMapper {
     }
 
     /**
-     * 允许单引号
-     * 允许不带引号的字段名称
-     * 数字转换为字符串格式
+     * 不允许单引号
+     * 不允许不带引号的字段名称
+     * 数字不转换为字符串格式
      * 禁止重复字段
      */
     public JsonMapper enableSimple() {
         this
-                .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
-                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
-                .configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS, true)
+                .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, false)
+                .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, false)
+                .configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS, false)
                 .configure(JsonGenerator.Feature.STRICT_DUPLICATE_DETECTION, true)
         ;
         return this;
