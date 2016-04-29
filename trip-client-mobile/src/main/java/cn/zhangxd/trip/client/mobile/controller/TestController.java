@@ -13,8 +13,8 @@ public class TestController extends BaseController {
 	private TripUserService tripUserService;
 	
 	@RequestMapping("/hello")
-	public String hello(String name) throws Exception {
-		System.out.println("==========" +  (tripUserService == null) + tripUserService.findUserByLogin(name));
+	public String hello(String name) {
+		System.out.println("==========" +  (tripUserService == null) + tripUserService.findUserByLogin(name).toString());
 		return "Hello: " + name;
 	}
 

@@ -66,20 +66,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-//    @Override
-//    public void addViewControllers(final ViewControllerRegistry registry) {
-//        super.addViewControllers(registry);
-//        registry.addViewController("/").setViewName("forward:/index");
-//        registry.addViewController("/index");
-//        registry.addViewController("/login");
-//    }
-
-//    @Override
-//    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-//        // 开放静态资源 eg: http://localhost:8090/resources/application.yml
-//        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/");
-//    }
-
     @Bean
     public MultipartResolver getMultipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
@@ -87,17 +73,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         return resolver;
     }
-
-//    @Bean
-//    public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer() {
-//        // 自定义错误页面
-//        return new EmbeddedServletContainerCustomizer() {
-//            @Override
-//            public void customize(ConfigurableEmbeddedServletContainer container) {
-//                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
-//                container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500"));
-//            }
-//        };
-//    }
 
 }
