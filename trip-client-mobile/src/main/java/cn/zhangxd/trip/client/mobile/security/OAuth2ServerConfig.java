@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -128,6 +129,7 @@ public class OAuth2ServerConfig {
                     .tokenStore(this.tokenStore())
                     .authenticationManager(this.authenticationManager)
                     .userDetailsService(this.tripUserService)
+                    .allowedTokenEndpointRequestMethods(HttpMethod.POST)
             ;
         }
 
