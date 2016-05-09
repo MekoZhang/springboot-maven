@@ -1,4 +1,4 @@
-package cn.zhangxd.trip.client.mobile.common.message.converter;
+package cn.zhangxd.trip.client.mobile.base.converter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -6,12 +6,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
 
-public class MyNullBooleanJsonSerializer extends JsonSerializer<Object> {
+public class MyNullMapJsonSerializer extends JsonSerializer<Object> {
 
     @Override
     public void serialize(Object value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         if (value == null) {
-            jgen.writeBoolean(false);
+            jgen.writeStartObject();
+            jgen.writeEndObject();
         } else {
             jgen.writeObject(value);
         }

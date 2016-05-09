@@ -1,6 +1,7 @@
 package cn.zhangxd.trip.client.mobile.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -44,8 +45,12 @@ public class CustomLogoutSuccessHandler
 
             if (oAuth2AccessToken != null) {
                 tokenStore.removeAccessToken(oAuth2AccessToken);
+            } else {
+                throw new InsufficientAuthenticationException("The client is not authenticated.");
             }
 
+        } else {
+            throw new InsufficientAuthenticationException("The client is not authenticated.");
         }
 
         response.setStatus(HttpServletResponse.SC_OK);

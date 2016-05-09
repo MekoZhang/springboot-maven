@@ -1,4 +1,4 @@
-package cn.zhangxd.trip.client.mobile.common.message.converter;
+package cn.zhangxd.trip.client.mobile.base.converter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

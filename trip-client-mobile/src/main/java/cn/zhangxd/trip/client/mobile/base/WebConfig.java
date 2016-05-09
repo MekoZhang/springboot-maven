@@ -2,8 +2,8 @@ package cn.zhangxd.trip.client.mobile.base;
 
 import cn.zhangxd.trip.client.mobile.common.filter.UserAgentFilter;
 import cn.zhangxd.trip.client.mobile.common.interceptor.LogInterceptor;
-import cn.zhangxd.trip.client.mobile.common.message.converter.JsonMapper;
-import cn.zhangxd.trip.client.mobile.common.message.converter.MyBeanSerializerModifier;
+import cn.zhangxd.trip.client.mobile.base.converter.JsonMapper;
+import cn.zhangxd.trip.client.mobile.base.converter.MyBeanSerializerModifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.context.annotation.Bean;
