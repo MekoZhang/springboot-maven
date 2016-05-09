@@ -10,9 +10,6 @@ spring:
       max-wait: -1 #\u6700\u5927\u7B49\u5F85\u65F6\u95F4
       min-idle: 0 #\u521D\u59CB\u5316\u8FDE\u63A5\u6570
 
-server:
-  port: 8081
-
 security:
   oauth2:
     client-id: api
