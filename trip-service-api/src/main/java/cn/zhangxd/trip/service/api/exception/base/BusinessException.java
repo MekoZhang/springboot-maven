@@ -1,10 +1,10 @@
-package cn.zhangxd.trip.service.api.exception;
+package cn.zhangxd.trip.service.api.exception.base;
 
 /**
  * 业务异常.
  * Created by zhangxd on 16/3/14.
  */
-public class BusinessException extends Exception implements IBaseException {
+public class BusinessException extends Exception implements BaseException {
 
     private int code;
 

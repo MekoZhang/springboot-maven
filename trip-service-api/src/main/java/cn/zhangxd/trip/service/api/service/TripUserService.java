@@ -1,5 +1,6 @@
 package cn.zhangxd.trip.service.api.service;
 
+import cn.zhangxd.trip.service.api.exception.UserNotFoundException;
 import cn.zhangxd.trip.service.api.vo.TripUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -14,5 +15,5 @@ public interface TripUserService extends UserDetailsService {
      * @param login 登录账号
      * @return 用户
      */
-    TripUser findUserByLogin(String login);
+    TripUser findUserByLogin(String login) throws UserNotFoundException;
 }

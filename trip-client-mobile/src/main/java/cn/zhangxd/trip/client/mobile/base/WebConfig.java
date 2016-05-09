@@ -1,5 +1,6 @@
 package cn.zhangxd.trip.client.mobile.base;
 
+import cn.zhangxd.trip.client.mobile.common.filter.UserAgentFilter;
 import cn.zhangxd.trip.client.mobile.common.interceptor.LogInterceptor;
 import cn.zhangxd.trip.client.mobile.common.message.converter.JsonMapper;
 import cn.zhangxd.trip.client.mobile.common.message.converter.MyBeanSerializerModifier;
@@ -29,6 +30,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public UserAgentFilter userAgentFilter() {
+        return new UserAgentFilter();
+    }
+
+    @Bean
     public LogInterceptor logInterceptor() {
         return new LogInterceptor();
     }
@@ -51,7 +57,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public HttpMessageConverter httpMessageConverter() {
+    public HttpMessageConverter  httpMessageConverter() {
         return new MappingJackson2HttpMessageConverter(this.objectMapper());
     }
 

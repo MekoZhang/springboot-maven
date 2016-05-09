@@ -13,11 +13,6 @@ spring:
 server:
   port: 8081
 
-logging:
-  level:
-    ROOT: INFO
-    cn.zhangxd.trip.client.mobile: DEBUG
-
 security:
   oauth2:
     client-id: api

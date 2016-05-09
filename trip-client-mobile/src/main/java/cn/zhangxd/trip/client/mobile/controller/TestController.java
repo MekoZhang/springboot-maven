@@ -18,7 +18,6 @@ public class TestController extends BaseController {
 	public Message hello(String name) throws Exception{
         Message message = new Message();
         TripUser user = tripUserService.findUserByLogin(name);
-//        if (1==1) throw new BusinessException(600);
 		logger.info("==========" +  (tripUserService == null) + user.toString());
         message.setMsg(user);
         return message;
