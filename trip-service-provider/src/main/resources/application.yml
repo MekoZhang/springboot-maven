@@ -39,3 +39,17 @@ spring:
       database: test # Database name.
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.
+
+  application:
+    name: Trip Service Provider
+  boot:
+    admin:
+      url: http://localhost:8090
+endpoints:
+  health:
+    sensitive: false
+
+security:
+  user:
+    name: admin
+    password: admin

@@ -29,6 +29,7 @@ public class ClientMobileApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        builder.bannerMode(Banner.Mode.OFF);
         return builder.sources(ClientMobileApplication.class); // 以 war 包形式发布时需要此设置
     }
 

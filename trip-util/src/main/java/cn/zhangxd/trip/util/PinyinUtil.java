@@ -30,22 +30,22 @@ public class PinyinUtil {
         t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         t3.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         t3.setVCharType(HanyuPinyinVCharType.WITH_V);
-        String t4 = "";
+        StringBuilder t4 = new StringBuilder();
         try {
             for (char aT1 : t1) {
                 // 判断是否为汉字字符
                 if (Character.toString(aT1).matches("[\\u4E00-\\u9FA5]+")) {
                     t2 = PinyinHelper.toHanyuPinyinStringArray(aT1, t3);// 将汉字的几种全拼都存到t2数组中
-                    t4 += t2[0];// 取出该汉字全拼的第一种读音并连接到字符串t4后
+                    t4.append(t2[0]);// 取出该汉字全拼的第一种读音并连接到字符串t4后
                 } else {
                     // 如果不是汉字字符，直接取出字符并连接到字符串t4后
-                    t4 += Character.toString(aT1);
+                    t4.append(Character.toString(aT1));
                 }
             }
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             logger.error("", e);
         }
-        return t4;
+        return t4.toString();
     }
 
     /**
@@ -62,7 +62,8 @@ public class PinyinUtil {
         t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         t3.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         t3.setVCharType(HanyuPinyinVCharType.WITH_V);
-        String t4 = "", t;
+        StringBuilder t4 = new StringBuilder();
+        String t;
         try {
             for (char aT1 : t1) {
                 // 判断是否为汉字字符
@@ -74,12 +75,12 @@ public class PinyinUtil {
                     t = Character.toString(aT1);
                 }
                 t = t.substring(0, 1).toUpperCase() + t.substring(1);
-                t4 += t;
+                t4.append(t);
             }
         } catch (BadHanyuPinyinOutputFormatCombination e) {
             logger.error("", e);
         }
-        return t4;
+        return t4.toString();
     }
 
     /**
@@ -89,18 +90,18 @@ public class PinyinUtil {
      * @return String
      */
     public static String getPinYinHeadChar(String str) {
-        String convert = "";
+        StringBuilder convert = new StringBuilder();
         for (int j = 0; j < str.length(); j++) {
             char word = str.charAt(j);
             // 提取汉字的首字母
             String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
             if (pinyinArray != null) {
-                convert += pinyinArray[0].charAt(0);
+                convert.append(pinyinArray[0].charAt(0));
             } else {
-                convert += word;
+                convert.append(word);
             }
         }
-        return convert;
+        return convert.toString();
     }
 
     /**

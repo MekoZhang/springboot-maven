@@ -6,6 +6,5 @@
 
     <dubbo:annotation package="cn.zhangxd.trip"/>
 
-    <!--<dubbo:reference interface="org.springframework.security.core.userdetails.UserDetailsService" id="userDetailsService" />-->
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.TripUserService" id="tripUserService" />
 </beans>
