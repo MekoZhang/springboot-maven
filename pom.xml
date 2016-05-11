@@ -17,8 +17,8 @@
     </parent>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <dubbo.version>2.8.4</dubbo.version>
         <curator-framework.version>1.3.3</curator-framework.version>
         <zookeeper.version>3.4.8</zookeeper.version>
@@ -47,6 +47,7 @@
         <module>trip-web-admin</module>
         <module>trip-client-mobile</module>
         <module>trip-monitor</module>
+        <module>trip-crawler</module>
     </modules>
 
     <dependencyManagement>

@@ -4,6 +4,8 @@ logging:
     cn.zhangxd.trip.infrastructure: DEBUG
 
 spring:
+  application:
+    name: Trip Service Provider
   # DataSource Config
   datasource:
     url: jdbc:mysql://localhost:3306/menu?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
@@ -40,16 +42,14 @@ spring:
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.
 
-  application:
-    name: Trip Service Provider
-  boot:
-    admin:
-      url: http://localhost:8090
-endpoints:
-  health:
-    sensitive: false
-
-security:
-  user:
-    name: admin
-    password: admin
+#  boot:
+#    admin:
+#      url: http://localhost:8090
+#endpoints:
+#  health:
+#    sensitive: false
+#
+#security:
+#  user:
+#    name: admin
+#    password: admin
