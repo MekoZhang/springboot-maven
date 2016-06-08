@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: Trip Web Admin
+
+security:
+  user:
+    password: password

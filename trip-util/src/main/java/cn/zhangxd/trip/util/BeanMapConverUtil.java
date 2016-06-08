@@ -76,7 +76,7 @@ public final class BeanMapConverUtil {
      */
     public static <T> Map<String, Object> beanToMapObjExceptNull(T bean) {
 
-        Class<? extends Object> type = bean.getClass();
+        Class<?> type = bean.getClass();
         Map<String, Object> returnMap = new HashMap<>();
 
         try {

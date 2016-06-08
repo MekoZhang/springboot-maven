@@ -44,12 +44,4 @@ spring:
 
 #  boot:
 #    admin:
-#      url: http://localhost:8090
-#endpoints:
-#  health:
-#    sensitive: false
-#
-#security:
-#  user:
-#    name: admin
-#    password: admin
+#      url: http://localhost:8888
