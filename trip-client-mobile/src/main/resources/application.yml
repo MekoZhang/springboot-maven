@@ -1,12 +1,17 @@
+logging:
+  level:
+    ROOT: INFO
+    cn.zhangxd.trip.client.mobile: DEBUG
+
 spring:
   redis:
     database: 1
-    host: localhost
+    host: 127.0.0.1
     port: 6379
     timeout: 0
     pool:
-      max-active: 8 #\u6700\u5927\u8FDE\u63A5\u6570
-      max-idle: 8 #\u6700\u5927\u7A7A\u95F2\u8FDE\u63A5\u6570
+      max-active: 300 #\u6700\u5927\u8FDE\u63A5\u6570
+      max-idle: 100 #\u6700\u5927\u7A7A\u95F2\u8FDE\u63A5\u6570
       max-wait: -1 #\u6700\u5927\u7B49\u5F85\u65F6\u95F4
       min-idle: 0 #\u521D\u59CB\u5316\u8FDE\u63A5\u6570
 

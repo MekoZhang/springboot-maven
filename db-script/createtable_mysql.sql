@@ -1,6 +1,7 @@
 /* System Tables */
 DROP TABLE IF EXISTS `sys_user`;
 DROP TABLE IF EXISTS `sys_dict`;
+DROP TABLE IF EXISTS `sys_log`;
 DROP TABLE IF EXISTS `sys_menu`;
 DROP TABLE IF EXISTS `sys_role`;
 DROP TABLE IF EXISTS `sys_role_menu`;
@@ -43,6 +44,21 @@ CREATE TABLE `sys_dict` (
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
 ) COMMENT='字典表';
+
+CREATE TABLE `sys_log` (
+  `id` VARCHAR(64) NOT NULL COMMENT '编号',
+  `type` CHAR(1) DEFAULT '1' COMMENT '日志类型',
+  `title` VARCHAR(255) DEFAULT '' COMMENT '日志标题',
+  `create_by` VARCHAR(64) COMMENT '创建者',
+  `create_date` DATETIME COMMENT '创建时间',
+  `remote_addr` VARCHAR(255) COMMENT '操作IP地址',
+  `user_agent` VARCHAR(255) COMMENT '用户代理',
+  `request_uri` VARCHAR(255) COMMENT '请求URI',
+  `method` VARCHAR(5) COMMENT '操作方式',
+  `params` TEXT COMMENT '操作提交的数据',
+  `exception` TEXT COMMENT '异常信息',
+  PRIMARY KEY (`id`)
+) COMMENT='日志表';
 
 CREATE TABLE `sys_menu` (
   `id` VARCHAR(36) NOT NULL COMMENT '编号',
