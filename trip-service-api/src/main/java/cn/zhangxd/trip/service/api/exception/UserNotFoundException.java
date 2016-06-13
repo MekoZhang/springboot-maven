@@ -8,14 +8,8 @@ import cn.zhangxd.trip.service.api.exception.base.BusinessException;
  */
 public class UserNotFoundException extends BusinessException {
 
-    private static final int CODE = 1234;
-
     public UserNotFoundException(String message) {
-        super(CODE, message);
+        super(message);
     }
 
-    @Override
-    public int getCode() {
-        return CODE;
-    }
 }

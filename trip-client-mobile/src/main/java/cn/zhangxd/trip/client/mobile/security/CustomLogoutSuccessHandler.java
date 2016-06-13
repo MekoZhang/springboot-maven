@@ -1,5 +1,8 @@
 package cn.zhangxd.trip.client.mobile.security;
 
+import cn.zhangxd.trip.client.mobile.constant.MessageConstants;
+import cn.zhangxd.trip.client.mobile.constant.ReturnCodeConstants;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
@@ -13,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -53,7 +58,10 @@ public class CustomLogoutSuccessHandler
             throw new InsufficientAuthenticationException("The client is not authenticated.");
         }
 
+        Map<String, Object> result = new HashMap<>();
+        result.put(MessageConstants.RETURN_FIELD_CODE, ReturnCodeConstants.CODE_SUCCESS);
         response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(new Gson().toJson(result));
 
     }
 
