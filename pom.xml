@@ -47,7 +47,6 @@
         <module>trip-web-admin</module>
         <module>trip-client-mobile</module>
         <module>trip-monitor</module>
-        <module>trip-crawler</module>
     </modules>
 
     <dependencyManagement>
