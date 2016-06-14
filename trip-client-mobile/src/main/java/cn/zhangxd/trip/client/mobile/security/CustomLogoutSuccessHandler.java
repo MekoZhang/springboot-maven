@@ -1,7 +1,7 @@
 package cn.zhangxd.trip.client.mobile.security;
 
-import cn.zhangxd.trip.client.mobile.constant.MessageConstants;
-import cn.zhangxd.trip.client.mobile.constant.ReturnCodeConstants;
+import cn.zhangxd.trip.client.mobile.constant.Message;
+import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -59,7 +59,7 @@ public class CustomLogoutSuccessHandler
         }
 
         Map<String, Object> result = new HashMap<>();
-        result.put(MessageConstants.RETURN_FIELD_CODE, ReturnCodeConstants.CODE_SUCCESS);
+        result.put(Message.RETURN_FIELD_CODE, ReturnCode.CODE_SUCCESS);
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(new Gson().toJson(result));
 

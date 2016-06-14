@@ -13,4 +13,11 @@ public class BusinessException extends Exception {
         super(message);
     }
 
+    public String getBusinessErrorCode() {
+        return "40001";
+    }
+
+    public int getHttpErrorCode() {
+        return 400;
+    }
 }
