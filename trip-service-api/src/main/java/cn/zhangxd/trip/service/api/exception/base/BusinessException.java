@@ -4,24 +4,20 @@ package cn.zhangxd.trip.service.api.exception.base;
  * 业务异常.
  * Created by zhangxd on 16/3/14.
  */
-public class BusinessException extends Exception implements BaseException {
-
-    private int code;
+public class BusinessException extends Exception {
 
     public BusinessException() {
     }
 
-    public BusinessException(int code) {
-        this.code = code;
-    }
-
-    public BusinessException(int code, String message) {
+    public BusinessException(String message) {
         super(message);
-        this.code = code;
     }
 
-    public int getCode() {
-        return code;
+    public String getBusinessErrorCode() {
+        return "40001";
     }
 
+    public int getHttpErrorCode() {
+        return 400;
+    }
 }

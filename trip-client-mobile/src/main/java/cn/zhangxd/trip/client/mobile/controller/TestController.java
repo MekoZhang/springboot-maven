@@ -1,8 +1,8 @@
 package cn.zhangxd.trip.client.mobile.controller;
 
 import cn.zhangxd.trip.client.mobile.common.controller.BaseController;
-import cn.zhangxd.trip.client.mobile.constant.MessageConstants;
-import cn.zhangxd.trip.client.mobile.constant.ReturnCodeConstants;
+import cn.zhangxd.trip.client.mobile.constant.Message;
+import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
 import cn.zhangxd.trip.service.api.service.TripUserService;
 import cn.zhangxd.trip.service.api.vo.TripUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class TestController extends BaseController {
         Map<String, Object> message = new HashMap<>();
         TripUser user = tripUserService.findUserByLogin(name);
 		logger.info("==========" +  (tripUserService == null) + user.toString());
-        message.put(MessageConstants.RETURN_FIELD_CODE, ReturnCodeConstants.CODE_SUCCESS);
-        message.put(MessageConstants.RETURN_FIELD_DATA, user);
+        message.put(Message.RETURN_FIELD_CODE, ReturnCode.CODE_SUCCESS);
+        message.put(Message.RETURN_FIELD_DATA, user);
         return message;
 	}
 

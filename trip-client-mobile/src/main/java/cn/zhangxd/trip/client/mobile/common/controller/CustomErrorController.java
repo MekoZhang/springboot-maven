@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.client.mobile.common.controller;
 
-import cn.zhangxd.trip.util.StringHelper;
+import cn.zhangxd.trip.client.mobile.constant.Message;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -31,11 +31,13 @@ public class CustomErrorController extends BasicErrorController {
     @ResponseBody
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
-        Map<String, Object> body = this.getErrorAttributes(request, this.isIncludeStackTrace(request, MediaType.ALL));
+        Map<String, Object> body = getErrorAttributes(request,
+                isIncludeStackTrace(request, MediaType.ALL));
         HttpStatus status = this.getStatus(request);
         Map<String, Object> message = new HashMap<>();
-        message.put("error", StringHelper.lowerCase(status.name()));
-        message.put("error_description", body.get("error"));
+        message.put(Message.RETURN_FIELD_CODE, Message.STATUS_CODE_MAP.get(status.value()));
+        message.put(Message.RETURN_FIELD_ERROR, body.get("error"));
+        message.put(Message.RETURN_FIELD_ERROR_DESC, body.get("message"));
         return new ResponseEntity<>(message, status);
     }
 

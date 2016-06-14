@@ -19,10 +19,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
 
 /**
  * OAuth2.0 Server配置
@@ -52,10 +53,27 @@ public class OAuth2ServerConfig {
         @Autowired
         private CustomLogoutSuccessHandler customLogoutSuccessHandler;
 
+        @Bean
+        public OAuth2AuthenticationEntryPoint resourceAuthenticationEntryPoint() {
+            OAuth2AuthenticationEntryPoint oae = new OAuth2AuthenticationEntryPoint();
+            oae.setExceptionTranslator(new CustomWebResponseExceptionTranslator());
+            return oae;
+        }
+
+        @Bean
+        public OAuth2AccessDeniedHandler resourceAccessDeniedHandler() {
+            OAuth2AccessDeniedHandler oad = new OAuth2AccessDeniedHandler();
+            oad.setExceptionTranslator(new CustomWebResponseExceptionTranslator());
+            return oad;
+        }
+
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
             resources
-                    .resourceId(RESOURCE_ID_API);
+                    .resourceId(RESOURCE_ID_API)
+                    .authenticationEntryPoint(this.resourceAuthenticationEntryPoint())
+                    .accessDeniedHandler(this.resourceAccessDeniedHandler())
+            ;
         }
 
         @Override
@@ -89,14 +107,7 @@ public class OAuth2ServerConfig {
         private AuthorizationProperties authorizationProperties;
 
         @Bean
-        public RedisTokenStoreSerializationStrategy redisTokenStoreSerializationStrategy() {
-            return new CustomSerializationStrategy();
-        }
-
-        @Bean
         public TokenStore tokenStore() {
-            RedisTokenStore tokenStore = new RedisTokenStore(this.redisConnectionFactory);
-            tokenStore.setSerializationStrategy(this.redisTokenStoreSerializationStrategy());
             return new RedisTokenStore(this.redisConnectionFactory);
         }
 
@@ -127,6 +138,7 @@ public class OAuth2ServerConfig {
                     .authenticationManager(this.authenticationManager)
                     .userDetailsService(this.tripUserService)
                     .allowedTokenEndpointRequestMethods(HttpMethod.POST)
+                    .exceptionTranslator(new CustomWebResponseExceptionTranslator())
             ;
         }
 
