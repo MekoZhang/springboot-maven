@@ -3,8 +3,8 @@ package cn.zhangxd.trip.client.mobile.controller;
 import cn.zhangxd.trip.client.mobile.common.controller.BaseController;
 import cn.zhangxd.trip.client.mobile.constant.Message;
 import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
-import cn.zhangxd.trip.service.api.service.TripUserService;
-import cn.zhangxd.trip.service.api.vo.TripUser;
+import cn.zhangxd.trip.service.api.entity.TripUser;
+import cn.zhangxd.trip.service.api.service.ITripUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class TestController extends BaseController {
 	
     @Autowired
-	private TripUserService tripUserService;
+	private ITripUserService tripUserService;
 	
 	@RequestMapping("/hello")
 	public Map<String, Object> hello(String name) throws Exception{

@@ -1,17 +1,15 @@
 package cn.zhangxd.trip.client.mobile.security;
 
-import cn.zhangxd.trip.service.api.service.TripUserService;
+import cn.zhangxd.trip.service.api.service.ITripUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationManager;
 
 /**
  * spring-security配置
@@ -22,7 +20,7 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private TripUserService tripUserService;
+    private ITripUserService tripUserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

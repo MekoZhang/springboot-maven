@@ -1,4 +1,4 @@
-package cn.zhangxd.trip.service.provider.config;
+package cn.zhangxd.trip.service.provider.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

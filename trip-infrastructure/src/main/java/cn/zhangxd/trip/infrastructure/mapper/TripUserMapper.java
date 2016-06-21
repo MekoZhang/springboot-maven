@@ -3,11 +3,11 @@ package cn.zhangxd.trip.infrastructure.mapper;
 
 import cn.zhangxd.trip.infrastructure.config.CrudDao;
 import cn.zhangxd.trip.infrastructure.config.annotation.MyBatisDao;
-import cn.zhangxd.trip.infrastructure.entity.TripUserPo;
+import cn.zhangxd.trip.service.api.entity.TripUser;
 
 @MyBatisDao
-public interface TripUserMapper extends CrudDao<TripUserPo> {
+public interface TripUserMapper extends CrudDao<TripUser> {
 
-	TripUserPo findByLogin(String login);
+	TripUser findByLogin(String login);
 
 }

@@ -1,43 +1,40 @@
 package cn.zhangxd.trip.service.provider.serviceImpl;
 
-import cn.zhangxd.trip.infrastructure.entity.TripUserPo;
 import cn.zhangxd.trip.infrastructure.mapper.TripUserMapper;
+import cn.zhangxd.trip.service.api.entity.TripUser;
 import cn.zhangxd.trip.service.api.exception.UserNotFoundException;
-import cn.zhangxd.trip.service.api.service.TripUserService;
-import cn.zhangxd.trip.service.api.vo.TripUser;
-import cn.zhangxd.trip.util.BeanHelper;
+import cn.zhangxd.trip.service.api.service.ITripUserService;
+import cn.zhangxd.trip.service.provider.common.service.CrudService;
 import com.alibaba.dubbo.config.annotation.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 用户服务实现
  * Created by zhangxd on 16/4/18.
  */
 @Service(protocol = {"dubbo"}, timeout = 5000)
-public class TripUserServiceImpl implements TripUserService {
-
-    @Autowired
-    private TripUserMapper tripUserMapper;
+@Transactional(readOnly = true)
+public class TripUserService extends CrudService<TripUserMapper, TripUser> implements ITripUserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TripUserPo user = tripUserMapper.findByLogin(username);
+        TripUser user = dao.findByLogin(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
         }
-        return (TripUser) BeanHelper.changeProValue(TripUserPo.class, TripUser.class, user);
+        return user;
     }
 
     @Override
     public TripUser findUserByLogin(String login) throws UserNotFoundException {
-        TripUserPo tripUser = tripUserMapper.findByLogin(login);
+        TripUser tripUser = dao.findByLogin(login);
 
         if (tripUser == null) {
             throw new UserNotFoundException(String.format("User %s does not exist!", login));
         }
 
-        return (TripUser) BeanHelper.changeProValue(TripUserPo.class, TripUser.class, tripUser);
+        return tripUser;
     }
 }

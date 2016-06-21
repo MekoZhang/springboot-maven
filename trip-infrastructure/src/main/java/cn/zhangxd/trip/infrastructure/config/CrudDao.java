@@ -1,7 +1,5 @@
 package cn.zhangxd.trip.infrastructure.config;
 
-import org.apache.ibatis.session.RowBounds;
-
 import java.util.List;
 
 /**
@@ -32,12 +30,11 @@ public interface CrudDao<T> extends BaseDao {
 	List<T> findList(T entity);
 
     /**
-     * 查询数据列表, 分页
-     * @param entity T
-     * @return List<T>
+     * 查询所有数据列表
+     * @param entity
+     * @return
      */
-    List<T> findList(T entity, RowBounds rowBounds);
-
+    List<T> findAllList(T entity);
 
 	/**
 	 * 插入数据

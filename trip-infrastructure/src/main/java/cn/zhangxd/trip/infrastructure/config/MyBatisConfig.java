@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.infrastructure.config;
 
-import cn.zhangxd.trip.infrastructure.entity.base.BaseEntity;
+import cn.zhangxd.trip.service.api.entity.base.BaseEntity;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class MyBatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setConfigLocation(configLocation);
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("cn.zhangxd.trip.infrastructure.entity");
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.zhangxd.trip.service.api.entity");
         sqlSessionFactoryBean.setTypeAliasesSuperType(BaseEntity.class);
         sqlSessionFactoryBean.setMapperLocations(mapperLocationsResources);
         return sqlSessionFactoryBean;
