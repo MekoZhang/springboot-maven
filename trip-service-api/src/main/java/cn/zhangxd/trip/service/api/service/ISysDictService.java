@@ -14,11 +14,11 @@ public interface ISysDictService {
 
     SysDict get(String id);
 
-	List<String> findTypeList();
+    List<String> findTypeList();
 
-	void save(SysDict dict);
+    void save(SysDict dict);
 
-	void delete(SysDict dict);
+    void delete(SysDict dict);
 
     List<SysDict> getDictList(String type);
 

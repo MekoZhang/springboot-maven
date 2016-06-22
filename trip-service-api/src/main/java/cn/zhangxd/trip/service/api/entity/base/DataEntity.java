@@ -17,7 +17,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
     protected String remarks;    // 备注
     protected Date createDate;    // 创建日期
     protected Date updateDate;    // 更新日期
-    protected String delFlag;    // 删除标记（0：正常；1：删除；）
+    protected String delFlag;    // 删除标记(0:正常;1:删除;)
 
     public DataEntity() {
         super();
@@ -49,7 +49,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
         this.updateDate = new Date();
     }
 
-    @Length(min=0, max=255)
+    @Length(min = 0, max = 255)
     public String getRemarks() {
         return remarks;
     }
@@ -77,7 +77,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
     }
 
     @JsonIgnore
-    @Length(min=1, max=1)
+    @Length(min = 1, max = 1)
     public String getDelFlag() {
         return delFlag;
     }

@@ -13,6 +13,6 @@ import java.util.List;
 @MyBatisDao
 public interface SysDictMapper extends CrudDao<SysDict> {
 
-	List<String> findTypeList(SysDict dict);
-	
+    List<String> findTypeList(SysDict dict);
+
 }

@@ -12,14 +12,15 @@ import cn.zhangxd.trip.service.api.entity.SysRole;
 public interface SysRoleMapper extends CrudDao<SysRole> {
 
     SysRole getByName(SysRole role);
-	
-	/**
-	 * 维护角色与菜单权限关系
-	 * @param role
-	 * @return
-	 */
-	int deleteRoleMenu(SysRole role);
 
-	int insertRoleMenu(SysRole role);
-	
+    /**
+     * 维护角色与菜单权限关系
+     *
+     * @param role
+     * @return
+     */
+    int deleteRoleMenu(SysRole role);
+
+    int insertRoleMenu(SysRole role);
+
 }

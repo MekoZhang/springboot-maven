@@ -20,23 +20,24 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class SysDictService extends CrudService<SysDictMapper, SysDict> implements ISysDictService {
 
-	/**
-	 * 查询字段类型列表
-	 * @return
-	 */
-	public List<String> findTypeList(){
-		return dao.findTypeList(new SysDict());
-	}
+    /**
+     * 查询字段类型列表
+     *
+     * @return
+     */
+    public List<String> findTypeList() {
+        return dao.findTypeList(new SysDict());
+    }
 
-	@Transactional(readOnly = false)
-	public void save(SysDict dict) {
-		super.save(dict);
-	}
+    @Transactional(readOnly = false)
+    public void save(SysDict dict) {
+        super.save(dict);
+    }
 
-	@Transactional(readOnly = false)
-	public void delete(SysDict dict) {
-		super.delete(dict);
-	}
+    @Transactional(readOnly = false)
+    public void delete(SysDict dict) {
+        super.delete(dict);
+    }
 
     public List<SysDict> getDictList(String type) {
         Map<String, List<SysDict>> dictMap = Maps.newHashMap();

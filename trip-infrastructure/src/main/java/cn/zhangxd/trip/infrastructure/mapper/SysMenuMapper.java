@@ -13,12 +13,12 @@ import java.util.List;
 @MyBatisDao
 public interface SysMenuMapper extends CrudDao<SysMenu> {
 
-	List<SysMenu> findByParentIdsLike(SysMenu menu);
+    List<SysMenu> findByParentIdsLike(SysMenu menu);
 
-	List<SysMenu> findByUserId(SysMenu menu);
-	
-	int updateParentIds(SysMenu menu);
-	
-	int updateSort(SysMenu menu);
-	
+    List<SysMenu> findByUserId(SysMenu menu);
+
+    int updateParentIds(SysMenu menu);
+
+    int updateSort(SysMenu menu);
+
 }

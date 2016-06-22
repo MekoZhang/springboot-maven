@@ -1,20 +1,22 @@
 package cn.zhangxd.trip.web.admin.base;
 
+import cn.zhangxd.trip.util.NumberHelper;
+import cn.zhangxd.trip.web.admin.base.mapper.JsonMapper;
+import cn.zhangxd.trip.web.admin.base.property.Global;
 import cn.zhangxd.trip.web.admin.common.interceptor.LogInterceptor;
-import cn.zhangxd.trip.web.admin.base.converter.JsonMapper;
-import cn.zhangxd.trip.web.admin.base.converter.MyBeanSerializerModifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opensymphony.sitemesh.webapp.SiteMeshFilter;
 import org.apache.catalina.filters.RemoteIpFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
+
+import javax.validation.Validator;
 
 /**
  * WEB配置类
@@ -29,9 +31,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public SiteMeshFilter siteMeshFilter() {
+        return new SiteMeshFilter();
+    }
+
+    @Bean
     public LogInterceptor logInterceptor() {
         return new LogInterceptor();
     }
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -39,14 +47,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry
                 .addInterceptor(logInterceptor())
                 .addPathPatterns("/**")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/sys/menu/tree")
+                .excludePathPatterns("/sys/menu/treeData")
         ;
     }
 
     @Bean
     public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new JsonMapper();
-        mapper.setSerializerFactory(mapper.getSerializerFactory().withSerializerModifier(new MyBeanSerializerModifier()));
-        return mapper;
+        return new JsonMapper();
+    }
+
+    @Bean
+    public Validator validator() {
+        return new LocalValidatorFactoryBean();
     }
 
     @Bean
@@ -66,38 +81,26 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-//    @Override
-//    public void addViewControllers(final ViewControllerRegistry registry) {
-//        super.addViewControllers(registry);
-//        registry.addViewController("/").setViewName("forward:/index");
-//        registry.addViewController("/index");
-//        registry.addViewController("/login");
-//    }
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp("/WEB-INF/views/", ".jsp");
+    }
 
-//    @Override
-//    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-//        // 开放静态资源 eg: http://localhost:8090/resources/application.yml
-//        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/");
-//    }
+    @Override
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+        // 开放静态资源
+        registry
+                .addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/")
+                .setCachePeriod(31536000)
+        ;
+    }
 
     @Bean
     public MultipartResolver getMultipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setMaxUploadSize(5 * 1024 * 1024); // 5MB
-
+        resolver.setMaxUploadSize(NumberHelper.toInt(Global.getConfig("web.maxUploadSize")));
         return resolver;
     }
-
-//    @Bean
-//    public EmbeddedServletContainerCustomizer embeddedServletContainerCustomizer() {
-//        // 自定义错误页面
-//        return new EmbeddedServletContainerCustomizer() {
-//            @Override
-//            public void customize(ConfigurableEmbeddedServletContainer container) {
-//                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
-//                container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500"));
-//            }
-//        };
-//    }
 
 }

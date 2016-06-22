@@ -8,6 +8,6 @@ import cn.zhangxd.trip.service.api.entity.TripUser;
 @MyBatisDao
 public interface TripUserMapper extends CrudDao<TripUser> {
 
-	TripUser findByLogin(String login);
+    TripUser findByLogin(String login);
 
 }

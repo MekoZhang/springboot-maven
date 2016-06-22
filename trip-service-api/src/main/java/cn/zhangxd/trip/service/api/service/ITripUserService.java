@@ -12,6 +12,7 @@ public interface ITripUserService extends UserDetailsService {
 
     /**
      * 通过登录账号查询用户
+     *
      * @param login 登录账号
      * @return 用户
      */

@@ -2,8 +2,8 @@ package cn.zhangxd.trip.web.admin.security.shiro.session;
 
 import cn.zhangxd.trip.util.DateHelper;
 import cn.zhangxd.trip.util.StringHelper;
-import cn.zhangxd.trip.web.admin.security.Global;
-import cn.zhangxd.trip.web.admin.security.Servlets;
+import cn.zhangxd.trip.web.admin.base.property.Global;
+import cn.zhangxd.trip.web.admin.common.web.Servlets;
 import com.google.common.collect.Sets;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
