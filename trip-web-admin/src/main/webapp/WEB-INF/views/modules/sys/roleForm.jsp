@@ -10,7 +10,7 @@
 			$("#name").focus();
 			$("#inputForm").validate({
 				rules: {
-					name: {remote: "${ctx}/sys/role/checkName?oldName=" + encodeURIComponent("${role.name}")}
+					name: {remote: "${ctx}/sys/role/checkName?oldName=" + encodeURIComponent("${sysRole.name}")}
 				},
 				messages: {
 					name: {remote: "角色名已存在"}
@@ -43,14 +43,14 @@
 			
 			// 用户-菜单
 			var zNodes=[
-					<c:forEach items="${menuList}" var="menu">{id:"${menu.id}", pId:"${not empty menu.parent.id?menu.parent.id:0}", name:"${not empty menu.parent.id?menu.name:'权限列表'}"},
+					<c:forEach items="${menuList}" var="sysMenu">{id:"${sysMenu.id}", pId:"${not empty sysMenu.parent.id?sysMenu.parent.id:0}", name:"${not empty sysMenu.parent.id?sysMenu.name:'权限列表'}"},
 		            </c:forEach>];
 			// 初始化树结构
 			var tree = $.fn.zTree.init($("#menuTree"), setting, zNodes);
 			// 不选择父节点
 			tree.setting.check.chkboxType = { "Y" : "ps", "N" : "s" };
 			// 默认选择节点
-			var ids = "${role.menuIds}".split(",");
+			var ids = "${sysRole.menuIds}".split(",");
 			for(var i=0; i<ids.length; i++) {
 				var node = tree.getNodeByParam("id", ids[i]);
 				try{tree.checkNode(node, true, false);}catch(e){}
@@ -63,15 +63,15 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/sys/role/">角色列表</a></li>
-		<li class="active"><a href="${ctx}/sys/role/form?id=${role.id}">角色<shiro:hasPermission name="sys:role:edit">${not empty role.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:role:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/sys/role/form?id=${role.id}">角色<shiro:hasPermission name="sys:role:edit">${not empty sysRole.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:role:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="role" action="${ctx}/sys/role/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="sysRole" action="${ctx}/sys/role/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">角色名称:</label>
 			<div class="controls">
-				<input id="oldName" name="oldName" type="hidden" value="${role.name}">
+				<input id="oldName" name="oldName" type="hidden" value="${sysRole.name}">
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -108,7 +108,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<c:if test="${(role.sysData eq fns:getDictValue('是', 'yes_no', '1') && fns:getUser().admin)||!(role.sysData eq fns:getDictValue('是', 'yes_no', '1'))}">
+			<c:if test="${(sysRole.sysData eq fns:getDictValue('是', 'yes_no', '1') && fns:getUser().admin)||!(sysRole.sysData eq fns:getDictValue('是', 'yes_no', '1'))}">
 				<shiro:hasPermission name="sys:role:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			</c:if>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

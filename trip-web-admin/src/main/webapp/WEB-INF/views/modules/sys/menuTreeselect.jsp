@@ -16,14 +16,14 @@
         }
     };
     var menuTreeselectNodes = [
-        <c:forEach items="${fns:getMenuList()}" var="menu">
-            <c:if test="${menu.isShow eq '1'}">
+        <c:forEach items="${fns:getMenuList()}" var="sysMenu">
+            <c:if test="${sysMenu.isShow eq '1'}">
                 {
-                    id: "${menu.id}",
-                    pId: "${not empty menu.parent.id ? menu.parent.id : 0}",
-                    name: "<i class=\"icon-${not empty menu.icon ? menu.icon : 'file'}\"></i>&nbsp;${not empty menu.parent.id ? menu.name : ''}",
-                    url: "${not empty menu.href && fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${not empty menu.href ? menu.href : 'javascript:'}",
-                    target: "${not empty menu.target ? menu.target:'_self'}"
+                    id: "${sysMenu.id}",
+                    pId: "${not empty sysMenu.parent.id ? sysMenu.parent.id : 0}",
+                    name: "<i class=\"icon-${not empty sysMenu.icon ? sysMenu.icon : 'file'}\"></i>&nbsp;${not empty sysMenu.parent.id ? sysMenu.name : ''}",
+                    url: "${not empty sysMenu.href && fn:indexOf(sysMenu.href, '://') eq -1 ? ctx : ''}${not empty sysMenu.href ? sysMenu.href : 'javascript:'}",
+                    target: "${not empty sysMenu.target ? sysMenu.target:'_self'}"
                 },
             </c:if>
         </c:forEach>

@@ -29,7 +29,7 @@
 		<li class="active"><a href="${ctx}/sys/user/info">个人信息</a></li>
 		<li><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="sysUser" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
 		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">姓名:</label>
@@ -64,19 +64,19 @@
 		<div class="control-group">
 			<label class="control-label">用户类型:</label>
 			<div class="controls">
-				<label class="lbl">${fns:getDictLabel(user.userType, 'sys_user_type', '无')}</label>
+				<label class="lbl">${fns:getDictLabel(sysUser.userType, 'sys_user_type', '无')}</label>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">用户角色:</label>
 			<div class="controls">
-				<label class="lbl">${user.roleNames}</label>
+				<label class="lbl">${sysUser.roleNames}</label>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">上次登录:</label>
 			<div class="controls">
-				<label class="lbl"><span ${(not empty user.loginIp && !(user.loginIp eq user.oldLoginIp)) ? 'style="color:red;" title="登录IP变更，确认是否为本人授权登录，如有需要请尽快修改密码。"' : ''}>IP: ${user.oldLoginIp}</span>&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.oldLoginDate}" type="both" dateStyle="full"/></label>
+				<label class="lbl"><span ${(not empty sysUser.loginIp && !(sysUser.loginIp eq sysUser.oldLoginIp)) ? 'style="color:red;" title="登录IP变更，确认是否为本人授权登录，如有需要请尽快修改密码。"' : ''}>IP: ${sysUser.oldLoginIp}</span>&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${sysUser.oldLoginDate}" type="both" dateStyle="full"/></label>
 			</div>
 		</div>
 		<div class="form-actions">

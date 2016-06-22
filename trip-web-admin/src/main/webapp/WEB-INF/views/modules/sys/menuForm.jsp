@@ -28,16 +28,16 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/sys/menu/">菜单列表</a></li>
-		<li class="active"><a href="${ctx}/sys/menu/form?id=${menu.id}&parent.id=${menu.parent.id}">菜单<shiro:hasPermission name="sys:menu:edit">${not empty menu.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:menu:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/sys/menu/form?id=${sysMenu.id}&parent.id=${sysMenu.parent.id}">菜单<shiro:hasPermission name="sys:menu:edit">${not empty sysMenu.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:menu:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="menu" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="sysMenu" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
 			<div class="controls">
-                <sys:treeselect id="menu" name="parent.id" value="${menu.parent.id}" labelName="parent.name" labelValue="${menu.parent.name}"
-					title="菜单" url="/sys/menu/treeData" extId="${menu.id}" cssClass="required"/>
+                <sys:treeselect id="menu" name="parent.id" value="${sysMenu.parent.id}" labelName="parent.name" labelValue="${sysMenu.parent.name}"
+					title="菜单" url="/sys/menu/treeData" extId="${sysMenu.id}" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -64,7 +64,7 @@
 		<div class="control-group">
 			<label class="control-label">图标:</label>
 			<div class="controls">
-				<sys:iconselect id="icon" name="icon" value="${menu.icon}"/>
+				<sys:iconselect id="icon" name="icon" value="${sysMenu.icon}"/>
 			</div>
 		</div>
 		<div class="control-group">

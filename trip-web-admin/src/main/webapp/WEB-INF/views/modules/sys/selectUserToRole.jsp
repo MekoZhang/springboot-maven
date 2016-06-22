@@ -20,24 +20,24 @@
 				callback: {onClick: treeOnClick}};
 		
 		var pre_selectedNodes =[
-   		        <c:forEach items="${userList}" var="user">
-   		        {id:"${user.id}",
+   		        <c:forEach items="${userList}" var="sysUser">
+   		        {id:"${sysUser.id}",
    		         pId:"0",
-   		         name:"<font color='red' style='font-weight:bold;'>${user.name}</font>"},
+   		         name:"<font color='red' style='font-weight:bold;'>${sysUser.name}</font>"},
    		        </c:forEach>];
 		
 		var selectedNodes =[
-		        <c:forEach items="${userList}" var="user">
-		        {id:"${user.id}",
+		        <c:forEach items="${userList}" var="sysUser">
+		        {id:"${sysUser.id}",
 		         pId:"0",
-		         name:"<font color='red' style='font-weight:bold;'>${user.name}</font>"},
+		         name:"<font color='red' style='font-weight:bold;'>${sysUser.name}</font>"},
 		        </c:forEach>];
 
         var allUserNodes =[
-            <c:forEach items="${allUserList}" var="user">
-            {id:"${user.id}",
+            <c:forEach items="${allUserList}" var="sysUser">
+            {id:"${sysUser.id}",
                 pId:"0",
-                name:"<font style='font-weight:bold;'>${user.name}</font>"},
+                name:"<font style='font-weight:bold;'>${sysUser.name}</font>"},
             </c:forEach>];
 		
 		var pre_ids = "${selectIds}".split(",");

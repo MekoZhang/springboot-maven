@@ -36,7 +36,7 @@
 		<li><a href="${ctx}/sys/user/list">用户列表</a></li>
 		<li class="active"><a href="${ctx}/sys/user/form?id=${user.id}">用户<shiro:hasPermission name="sys:user:edit">${not empty user.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:user:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="sysUser" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
 		<div class="control-group">
@@ -49,7 +49,7 @@
 		<div class="control-group">
 			<label class="control-label">登录名:</label>
 			<div class="controls">
-				<input id="oldLoginName" name="oldLoginName" type="hidden" value="${user.loginName}">
+				<input id="oldLoginName" name="oldLoginName" type="hidden" value="${sysUser.loginName}">
 				<form:input path="loginName" htmlEscape="false" maxlength="50" class="required userName"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -57,16 +57,16 @@
 		<div class="control-group">
 			<label class="control-label">密码:</label>
 			<div class="controls">
-				<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="3" class="${empty user.id?'required':''}"/>
-				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
-				<c:if test="${not empty user.id}"><span class="help-inline">若不修改密码，请留空。</span></c:if>
+				<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="3" class="${empty sysUser.id?'required':''}"/>
+				<c:if test="${empty sysUser.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
+				<c:if test="${not empty sysUser.id}"><span class="help-inline">若不修改密码，请留空。</span></c:if>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">确认密码:</label>
 			<div class="controls">
 				<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" equalTo="#newPassword"/>
-				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
+				<c:if test="${empty sysUser.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
 			</div>
 		</div>
 		<div class="control-group">
@@ -118,17 +118,17 @@
 				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
 			</div>
 		</div>
-		<c:if test="${not empty user.id}">
+		<c:if test="${not empty sysUser.id}">
 			<div class="control-group">
 				<label class="control-label">创建时间:</label>
 				<div class="controls">
-					<label class="lbl"><fmt:formatDate value="${user.createDate}" type="both" dateStyle="full"/></label>
+					<label class="lbl"><fmt:formatDate value="${sysUser.createDate}" type="both" dateStyle="full"/></label>
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">最后登陆:</label>
 				<div class="controls">
-					<label class="lbl">IP: ${user.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${user.loginDate}" type="both" dateStyle="full"/></label>
+					<label class="lbl">IP: ${sysUser.loginIp}&nbsp;&nbsp;&nbsp;&nbsp;时间：<fmt:formatDate value="${sysUser.loginDate}" type="both" dateStyle="full"/></label>
 				</div>
 			</div>
 		</c:if>
