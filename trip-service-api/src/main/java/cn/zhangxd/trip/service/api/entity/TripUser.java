@@ -2,6 +2,7 @@ package cn.zhangxd.trip.service.api.entity;
 
 
 import cn.zhangxd.trip.service.api.entity.base.DataEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,6 +44,7 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(TRIP_USER_ROLE));
@@ -50,26 +52,31 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return getLogin();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

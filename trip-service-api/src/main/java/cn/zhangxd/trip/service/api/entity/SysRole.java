@@ -108,19 +108,6 @@ public class SysRole extends DataEntity<SysRole> {
         }
     }
 
-    /**
-     * 获取权限字符串列表
-     */
-    public List<String> getPermissions() {
-        List<String> permissions = Lists.newArrayList();
-        for (SysMenu menu : menuList) {
-            if (menu.getPermission() != null && !"".equals(menu.getPermission())) {
-                permissions.add(menu.getPermission());
-            }
-        }
-        return permissions;
-    }
-
     public SysUser getUser() {
         return user;
     }

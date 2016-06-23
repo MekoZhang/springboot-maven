@@ -7,6 +7,8 @@ import cn.zhangxd.trip.service.provider.common.service.CrudService;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -30,15 +32,18 @@ public class SysDictService extends CrudService<SysDictMapper, SysDict> implemen
     }
 
     @Transactional(readOnly = false)
+    @CacheEvict(value = "sysDictList", key = "'sysDictList' + #dict.getType()")
     public void save(SysDict dict) {
         super.save(dict);
     }
 
     @Transactional(readOnly = false)
+    @CacheEvict(value = "sysDictList", key = "'sysDictList' + #dict.getType()")
     public void delete(SysDict dict) {
         super.delete(dict);
     }
 
+    @Cacheable(value = "sysDictList", key = "'sysDictList' + #type")
     public List<SysDict> getDictList(String type) {
         Map<String, List<SysDict>> dictMap = Maps.newHashMap();
         for (SysDict dict : dao.findAllList(new SysDict())) {

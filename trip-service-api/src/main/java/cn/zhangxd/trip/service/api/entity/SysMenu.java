@@ -119,6 +119,7 @@ public class SysMenu extends DataEntity<SysMenu> {
         this.permission = permission;
     }
 
+    @JsonIgnore
     public String getParentId() {
         return parent != null && parent.getId() != null ? parent.getId() : "0";
     }
