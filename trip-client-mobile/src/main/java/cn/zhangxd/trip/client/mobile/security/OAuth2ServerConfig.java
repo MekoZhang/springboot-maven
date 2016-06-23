@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.client.mobile.security;
 
-import cn.zhangxd.trip.service.api.service.TripUserService;
+import cn.zhangxd.trip.service.api.service.ITripUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -128,7 +128,7 @@ public class OAuth2ServerConfig {
         }
 
         @Autowired
-        private TripUserService tripUserService;
+        private ITripUserService tripUserService;
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {

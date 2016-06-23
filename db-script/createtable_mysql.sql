@@ -1,7 +1,6 @@
 /* System Tables */
 DROP TABLE IF EXISTS `sys_user`;
 DROP TABLE IF EXISTS `sys_dict`;
-DROP TABLE IF EXISTS `sys_log`;
 DROP TABLE IF EXISTS `sys_menu`;
 DROP TABLE IF EXISTS `sys_role`;
 DROP TABLE IF EXISTS `sys_role_menu`;
@@ -19,9 +18,7 @@ CREATE TABLE `sys_user` (
   `login_ip` VARCHAR(100) COMMENT '最后登陆IP',
   `login_date` DATETIME COMMENT '最后登陆时间',
   `login_flag` VARCHAR(64) COMMENT '是否可登录',
-  `create_by` VARCHAR(64) NOT NULL COMMENT '创建者',
   `create_date` DATETIME NOT NULL COMMENT '创建时间',
-  `update_by` VARCHAR(64) NOT NULL COMMENT '更新者',
   `update_date` DATETIME NOT NULL COMMENT '更新时间',
   `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
@@ -36,29 +33,12 @@ CREATE TABLE `sys_dict` (
   `description` VARCHAR(100) NOT NULL COMMENT '描述',
   `sort` DECIMAL(10,0) NOT NULL COMMENT '排序（升序）',
   `parent_id` VARCHAR(64) DEFAULT '0' COMMENT '父级编号',
-  `create_by` VARCHAR(64) NOT NULL COMMENT '创建者',
   `create_date` DATETIME NOT NULL COMMENT '创建时间',
-  `update_by` VARCHAR(64) NOT NULL COMMENT '更新者',
   `update_date` DATETIME NOT NULL COMMENT '更新时间',
   `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
 ) COMMENT='字典表';
-
-CREATE TABLE `sys_log` (
-  `id` VARCHAR(64) NOT NULL COMMENT '编号',
-  `type` CHAR(1) DEFAULT '1' COMMENT '日志类型',
-  `title` VARCHAR(255) DEFAULT '' COMMENT '日志标题',
-  `create_by` VARCHAR(64) COMMENT '创建者',
-  `create_date` DATETIME COMMENT '创建时间',
-  `remote_addr` VARCHAR(255) COMMENT '操作IP地址',
-  `user_agent` VARCHAR(255) COMMENT '用户代理',
-  `request_uri` VARCHAR(255) COMMENT '请求URI',
-  `method` VARCHAR(5) COMMENT '操作方式',
-  `params` TEXT COMMENT '操作提交的数据',
-  `exception` TEXT COMMENT '异常信息',
-  PRIMARY KEY (`id`)
-) COMMENT='日志表';
 
 CREATE TABLE `sys_menu` (
   `id` VARCHAR(36) NOT NULL COMMENT '编号',
@@ -71,9 +51,7 @@ CREATE TABLE `sys_menu` (
   `icon` VARCHAR(100) COMMENT '图标',
   `is_show` CHAR(1) NOT NULL COMMENT '是否在菜单中显示',
   `permission` VARCHAR(200) COMMENT '权限标识',
-  `create_by` VARCHAR(64) NOT NULL COMMENT '创建者',
   `create_date` DATETIME NOT NULL COMMENT '创建时间',
-  `update_by` VARCHAR(64) NOT NULL COMMENT '更新者',
   `update_date` DATETIME NOT NULL COMMENT '更新时间',
   `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
@@ -85,9 +63,7 @@ CREATE TABLE `sys_role` (
   `name` VARCHAR(100) NOT NULL COMMENT '角色名称',
   `is_sys` VARCHAR(64) COMMENT '是否系统数据',
   `useable` VARCHAR(64) COMMENT '是否可用',
-  `create_by` VARCHAR(64) NOT NULL COMMENT '创建者',
   `create_date` DATETIME NOT NULL COMMENT '创建时间',
-  `update_by` VARCHAR(64) NOT NULL COMMENT '更新者',
   `update_date` DATETIME NOT NULL COMMENT '更新时间',
   `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
@@ -111,10 +87,13 @@ DROP TABLE IF EXISTS `trip_user`;
 
 CREATE TABLE `trip_user` (
   `id` VARCHAR(36) NOT NULL COMMENT '编号',
-  `login` VARCHAR(255) NOT NULL COMMENT '账号',
+  `login` VARCHAR(64) NOT NULL COMMENT '账号',
   `password` VARCHAR(255) NOT NULL COMMENT '密码',
   `name` VARCHAR(255) NOT NULL COMMENT '姓名',
   `gender` CHAR(1) DEFAULT '0' COMMENT '性别\n0：未知\n1：男\n2：女',
+  `create_date` DATETIME NOT NULL COMMENT '创建时间',
+  `update_date` DATETIME NOT NULL COMMENT '更新时间',
+  `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC)

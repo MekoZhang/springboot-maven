@@ -6,5 +6,5 @@
 
     <dubbo:annotation package="cn.zhangxd.trip"/>
 
-    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.TripUserService" id="tripUserService" />
+    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ITripUserService" id="tripUserService" />
 </beans>
