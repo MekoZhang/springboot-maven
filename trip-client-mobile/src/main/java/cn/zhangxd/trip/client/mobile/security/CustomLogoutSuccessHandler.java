@@ -59,7 +59,7 @@ public class CustomLogoutSuccessHandler
         }
 
         Map<String, Object> result = new HashMap<>();
-        result.put(Message.RETURN_FIELD_CODE, ReturnCode.CODE_SUCCESS);
+        result.put(Message.RETURN_FIELD_CODE, ReturnCode.SUCCESS);
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(new Gson().toJson(result));
 

@@ -12,11 +12,4 @@ public class UserNotFoundException extends BusinessException {
         super(message);
     }
 
-    public String getBusinessErrorCode() {
-        return "30603";
-    }
-
-    public int getHttpErrorCode() {
-        return 403;
-    }
 }

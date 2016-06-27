@@ -1,14 +1,22 @@
 package cn.zhangxd.trip.client.mobile.common.controller;
 
+import cn.zhangxd.trip.client.mobile.constant.Message;
+import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
+import cn.zhangxd.trip.service.api.exception.base.BusinessException;
 import cn.zhangxd.trip.util.DateHelper;
 import cn.zhangxd.trip.util.EncodeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 控制器支持类
@@ -48,6 +56,16 @@ public abstract class BaseController {
                 setValue(DateHelper.parseDate(text));
             }
         });
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleBusinessException(BusinessException ex) {
+        Map<String, Object> message = new HashMap<>();
+        message.put(Message.RETURN_FIELD_CODE, ReturnCode.BAD_REQUEST);
+        message.put(Message.RETURN_FIELD_ERROR, "Business Error");
+        message.put(Message.RETURN_FIELD_ERROR_DESC, ex.getMessage());
+        return message;
     }
 
 }

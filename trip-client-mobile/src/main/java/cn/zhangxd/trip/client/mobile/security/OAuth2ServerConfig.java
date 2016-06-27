@@ -1,5 +1,6 @@
 package cn.zhangxd.trip.client.mobile.security;
 
+import cn.zhangxd.trip.client.mobile.security.exception.CustomWebResponseExceptionTranslator;
 import cn.zhangxd.trip.service.api.service.ITripUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint;
@@ -124,6 +126,28 @@ public class OAuth2ServerConfig {
                     .resourceIds(RESOURCE_ID_API)
                     .accessTokenValiditySeconds(authorizationProperties.getAccessTokenValiditySeconds())
                     .refreshTokenValiditySeconds(authorizationProperties.getRefreshTokenValiditySeconds())
+            ;
+        }
+
+        @Bean
+        public OAuth2AuthenticationEntryPoint serverAuthenticationEntryPoint() {
+            OAuth2AuthenticationEntryPoint oae = new OAuth2AuthenticationEntryPoint();
+            oae.setExceptionTranslator(new CustomWebResponseExceptionTranslator());
+            return oae;
+        }
+
+        @Bean
+        public OAuth2AccessDeniedHandler serverAccessDeniedHandler() {
+            OAuth2AccessDeniedHandler oad = new OAuth2AccessDeniedHandler();
+            oad.setExceptionTranslator(new CustomWebResponseExceptionTranslator());
+            return oad;
+        }
+
+        @Override
+        public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+            security
+                    .authenticationEntryPoint(this.serverAuthenticationEntryPoint())
+                    .accessDeniedHandler(this.serverAccessDeniedHandler())
             ;
         }
 

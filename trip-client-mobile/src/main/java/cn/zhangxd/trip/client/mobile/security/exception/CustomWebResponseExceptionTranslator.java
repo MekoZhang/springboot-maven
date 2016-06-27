@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.zhangxd.trip.client.mobile.security;
+package cn.zhangxd.trip.client.mobile.security.exception;
 
 import cn.zhangxd.trip.client.mobile.constant.Message;
 import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
@@ -81,54 +81,52 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
 
-        e.addAdditionalInformation(Message.RETURN_FIELD_CODE, getBusinessCode(e.getOAuth2ErrorCode()));
+        e.addAdditionalInformation(Message.RETURN_FIELD_CODE, getBusinessCode(e));
 
-        ResponseEntity<OAuth2Exception> response = new ResponseEntity<OAuth2Exception>(e, headers,
-                HttpStatus.valueOf(status));
-
-        return response;
+        return new ResponseEntity<>(e, headers, HttpStatus.valueOf(status));
 
     }
 
-    private String getBusinessCode(String errorCode) {
-        if (OAuth2Exception.INVALID_CLIENT.equals(errorCode)) {
-            return ReturnCode.CODE_INVALID_CLIENT;
-        } else if (OAuth2Exception.UNAUTHORIZED_CLIENT.equals(errorCode) || UNAUTHORIZED_USER.equals(errorCode)) {
-            return ReturnCode.CODE_UNAUTHORIZED_CLIENT;
-        } else if (OAuth2Exception.INVALID_GRANT.equals(errorCode)) {
-            return ReturnCode.CODE_INVALID_GRANT;
-        } else if (OAuth2Exception.INVALID_SCOPE.equals(errorCode)) {
-            return ReturnCode.CODE_INVALID_SCOPE;
-        } else if (OAuth2Exception.INVALID_TOKEN.equals(errorCode)) {
-            return ReturnCode.CODE_INVALID_TOKEN;
-        } else if (OAuth2Exception.INVALID_REQUEST.equals(errorCode)) {
-            return ReturnCode.CODE_INVALID_REQUEST;
-        } else if (OAuth2Exception.UNSUPPORTED_GRANT_TYPE.equals(errorCode)) {
-            return ReturnCode.CODE_UNSUPPORTED_GRANT_TYPE;
-        } else if (OAuth2Exception.UNSUPPORTED_RESPONSE_TYPE.equals(errorCode)) {
-            return ReturnCode.CODE_UNSUPPORTED_RESPONSE_TYPE;
-        } else if (OAuth2Exception.ACCESS_DENIED.equals(errorCode)) {
-            return ReturnCode.CODE_FORBIDDEN;
-        } else if (SERVER_ERROR.equals(errorCode)) {
-            return ReturnCode.CODE_INTERNAL_SERVER_ERROR;
-        } else if (UNAUTHORIZED.equals(errorCode)) {
-            return ReturnCode.CODE_UNAUTHORIZED;
-        } else if (METHOD_NOT_ALLOWED.equals(errorCode)) {
-            return ReturnCode.CODE_METHOD_NOT_ALLOWED;
+    private String getBusinessCode(Exception e) {
+        if (e instanceof InvalidClientException) {
+            // 401 invalid_client
+            return ReturnCode.UNAUTHORIZED;
+        } else if (e instanceof InvalidGrantException) {
+            // 400 invalid_grant
+            return ReturnCode.INVALID_GRANT;
+        } else if (e instanceof InvalidScopeException) {
+            // 400 invalid_scope
+            return ReturnCode.INVALID_SCOPE;
+        } else if (e instanceof InvalidTokenException) {
+            // 401 invalid_token
+            return ReturnCode.INVALID_TOKEN;
+        } else if (e instanceof InvalidRequestException) {
+            // 400 invalid_request
+            return ReturnCode.BAD_REQUEST;
+        } else if (e instanceof UnsupportedGrantTypeException) {
+            // 400 unsupported_grant_type
+            return ReturnCode.UNSUPPORTED_GRANT_TYPE;
+        } else if (e instanceof ForbiddenException) {
+            // 403 access_denied
+            return ReturnCode.FORBIDDEN;
+        } else if (e instanceof ServerErrorException) {
+            // 500 server_error
+            return ReturnCode.INTERNAL_SERVER_ERROR;
+        } else if (e instanceof UnauthorizedException) {
+            // 401 unauthorized
+            return ReturnCode.UNAUTHORIZED;
+        } else if (e instanceof MethodNotAllowed) {
+            // 405 method_not_allowed
+            return ReturnCode.METHOD_NOT_ALLOWED;
         } else {
-            return ReturnCode.CODE_UNAUTHORIZED;
+            // 400 invalid_request
+            return ReturnCode.BAD_REQUEST;
         }
     }
 
     public void setThrowableAnalyzer(ThrowableAnalyzer throwableAnalyzer) {
         this.throwableAnalyzer = throwableAnalyzer;
     }
-
-    public static final String SERVER_ERROR = "server_error";
-    public static final String UNAUTHORIZED = "unauthorized";
-    public static final String METHOD_NOT_ALLOWED = "method_not_allowed";
-    public static final String UNAUTHORIZED_USER = "unauthorized_user";
-
 
     @SuppressWarnings("serial")
     private static class ForbiddenException extends OAuth2Exception {
@@ -138,7 +136,7 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
         }
 
         public String getOAuth2ErrorCode() {
-            return ACCESS_DENIED;
+            return "access_denied";
         }
 
         public int getHttpErrorCode() {
@@ -155,7 +153,7 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
         }
 
         public String getOAuth2ErrorCode() {
-            return SERVER_ERROR;
+            return "server_error";
         }
 
         public int getHttpErrorCode() {
@@ -172,7 +170,7 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
         }
 
         public String getOAuth2ErrorCode() {
-            return UNAUTHORIZED;
+            return "unauthorized";
         }
 
         public int getHttpErrorCode() {
@@ -189,7 +187,7 @@ public class CustomWebResponseExceptionTranslator implements WebResponseExceptio
         }
 
         public String getOAuth2ErrorCode() {
-            return METHOD_NOT_ALLOWED;
+            return "method_not_allowed";
         }
 
         public int getHttpErrorCode() {
