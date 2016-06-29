@@ -73,7 +73,7 @@ public class CaptchaService extends BaseService implements ICaptchaService {
 
         //存入 Redis
         try {
-            redisRepo.setExpire(REDIS_PREFIX + mobile, code, 600000);
+            redisRepo.setExpire(REDIS_PREFIX + mobile, code, 600); //10分钟有效期
         } catch (Exception e) {
             logger.error("Redis异常", e);
         }
