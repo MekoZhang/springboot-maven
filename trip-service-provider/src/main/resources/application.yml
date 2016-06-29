@@ -45,3 +45,10 @@ spring:
 #  boot:
 #    admin:
 #      url: http://localhost:8888
+
+api:
+  taobao:
+    sms:
+      url: http://gw.api.taobao.com/router/rest
+      key: 23393509
+      secret: fbee7a46d4fa2341e0baec53c0d027ef

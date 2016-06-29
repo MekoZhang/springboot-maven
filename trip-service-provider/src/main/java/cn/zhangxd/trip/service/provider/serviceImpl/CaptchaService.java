@@ -6,7 +6,7 @@ import cn.zhangxd.trip.service.api.exception.*;
 import cn.zhangxd.trip.service.api.service.ICaptchaService;
 import cn.zhangxd.trip.service.api.service.ITripUserService;
 import cn.zhangxd.trip.service.provider.common.service.BaseService;
-import cn.zhangxd.trip.service.provider.thirdapi.sms.SmsUtils;
+import cn.zhangxd.trip.service.provider.thirdapi.sms.SmsService;
 import cn.zhangxd.trip.util.RandomHelper;
 import cn.zhangxd.trip.util.StringHelper;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -21,6 +21,8 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class CaptchaService extends BaseService implements ICaptchaService {
 
+    @Autowired
+    private SmsService smsService;
     @Autowired
     private ITripUserService tripUserService;
     @Autowired
@@ -81,7 +83,7 @@ public class CaptchaService extends BaseService implements ICaptchaService {
         smsParam.put("product", "环球旅行");
         String smsParamString = new Gson().toJson(smsParam);
 
-        SmsUtils.sendMessage("", signName, smsParamString, mobile, templateCode);
+        smsService.sendMessage("", signName, smsParamString, mobile, templateCode);
     }
 
 }
