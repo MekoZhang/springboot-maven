@@ -20,6 +20,11 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
     private String password;
     private String gender;
 
+    public TripUser() {
+        super();
+        this.gender = "0"; //未知
+    }
+
     public String getNickname() {
         return nickname;
     }
