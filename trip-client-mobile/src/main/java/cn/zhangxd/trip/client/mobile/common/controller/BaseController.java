@@ -3,6 +3,8 @@ package cn.zhangxd.trip.client.mobile.common.controller;
 import cn.zhangxd.trip.client.mobile.constant.Message;
 import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
 import cn.zhangxd.trip.service.api.exception.base.BusinessException;
+import cn.zhangxd.trip.util.BeanValidators;
+import cn.zhangxd.trip.util.Collections3;
 import cn.zhangxd.trip.util.DateHelper;
 import cn.zhangxd.trip.util.EncodeHelper;
 import org.slf4j.Logger;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolationException;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,10 +65,22 @@ public abstract class BaseController {
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleBusinessException(BusinessException ex) {
+        return makeErrorMessage(ReturnCode.BAD_REQUEST, "Business Error", ex.getMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleConstraintViolationException(ConstraintViolationException ex) {
+        List<String> list = BeanValidators.extractMessage(ex);
+        return makeErrorMessage(ReturnCode.INVALID_FIELD,
+                "Invalid Field", Collections3.convertToString(list, ";"));
+    }
+
+    protected Map<String, Object> makeErrorMessage(String code, String error, String desc) {
         Map<String, Object> message = new HashMap<>();
-        message.put(Message.RETURN_FIELD_CODE, ReturnCode.BAD_REQUEST);
-        message.put(Message.RETURN_FIELD_ERROR, "Business Error");
-        message.put(Message.RETURN_FIELD_ERROR_DESC, ex.getMessage());
+        message.put(Message.RETURN_FIELD_CODE, code);
+        message.put(Message.RETURN_FIELD_ERROR, error);
+        message.put(Message.RETURN_FIELD_ERROR_DESC, desc);
         return message;
     }
 

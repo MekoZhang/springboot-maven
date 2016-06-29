@@ -1,9 +1,9 @@
 package cn.zhangxd.trip.client.mobile.base;
 
-import cn.zhangxd.trip.client.mobile.common.filter.UserAgentFilter;
-import cn.zhangxd.trip.client.mobile.common.interceptor.LogInterceptor;
 import cn.zhangxd.trip.client.mobile.base.converter.JsonMapper;
 import cn.zhangxd.trip.client.mobile.base.converter.MyBeanSerializerModifier;
+import cn.zhangxd.trip.client.mobile.common.filter.UserAgentFilter;
+import cn.zhangxd.trip.client.mobile.common.interceptor.LogInterceptor;
 import cn.zhangxd.trip.client.mobile.security.exception.OAuth2ExceptionMixIn;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.filters.RemoteIpFilter;
@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -84,4 +86,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
+    @Bean
+    public LocalValidatorFactoryBean validator() {
+        return new LocalValidatorFactoryBean();
+    }
+
+    @Bean
+    public MethodValidationPostProcessor getMethodValidationPostProcessor(){
+        MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+        processor.setValidator(validator());
+        return processor;
+    }
 }

@@ -87,14 +87,14 @@ DROP TABLE IF EXISTS `trip_user`;
 
 CREATE TABLE `trip_user` (
   `id` VARCHAR(36) NOT NULL COMMENT '编号',
-  `login` VARCHAR(64) NOT NULL COMMENT '账号',
+  `mobile` VARCHAR(64) NOT NULL COMMENT '手机',
   `password` VARCHAR(255) NOT NULL COMMENT '密码',
-  `name` VARCHAR(255) NOT NULL COMMENT '姓名',
+  `nickname` VARCHAR(255) NOT NULL COMMENT ' 昵称',
   `gender` CHAR(1) DEFAULT '0' COMMENT '性别\n0：未知\n1：男\n2：女',
   `create_date` DATETIME NOT NULL COMMENT '创建时间',
   `update_date` DATETIME NOT NULL COMMENT '更新时间',
   `remarks` VARCHAR(255) COMMENT '备注信息',
   `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `login_UNIQUE` (`login` ASC)
+  UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC)
 ) COMMENT='用户';

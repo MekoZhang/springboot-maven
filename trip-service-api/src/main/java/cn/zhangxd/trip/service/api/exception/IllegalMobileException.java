@@ -3,12 +3,12 @@ package cn.zhangxd.trip.service.api.exception;
 import cn.zhangxd.trip.service.api.exception.base.BusinessException;
 
 /**
- * 用户未发现
+ * 手机号码不合法
  * Created by zhangxd on 16/5/8.
  */
-public class UserNotFoundException extends BusinessException {
+public class IllegalMobileException extends BusinessException {
 
-    public UserNotFoundException(String message) {
+    public IllegalMobileException(String message) {
         super(message);
     }
 

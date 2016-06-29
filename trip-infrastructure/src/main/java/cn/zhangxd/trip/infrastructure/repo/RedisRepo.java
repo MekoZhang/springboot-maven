@@ -2,6 +2,7 @@ package cn.zhangxd.trip.infrastructure.repo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
@@ -11,7 +12,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -21,7 +21,7 @@ public class RedisRepo {
 
     private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
-    @Resource(name = "redisTemplate")
+    @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
     private Logger logger = LoggerFactory.getLogger(RedisRepo.class);

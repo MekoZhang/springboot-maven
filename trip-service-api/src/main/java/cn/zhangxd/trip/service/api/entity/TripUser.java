@@ -15,24 +15,25 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
 
     private static final String TRIP_USER_ROLE = "ROLE_USER";
 
-    private String name;
-    private String login;
+    private String nickname;
+    private String mobile;
     private String password;
+    private String gender;
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getLogin() {
-        return login;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getPassword() {
@@ -41,6 +42,14 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class TripUser extends DataEntity<TripUser> implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return getLogin();
+        return getMobile();
     }
 
     @Override

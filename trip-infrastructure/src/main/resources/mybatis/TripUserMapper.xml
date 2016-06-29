@@ -5,10 +5,53 @@
     <select id="findByLogin" parameterType="String" resultType="TripUser">
         SELECT
             `id`,
-            `name`,
-            `login`,
-            `password`
+            `nickname`,
+            `mobile`,
+            `password`,
+            `gender`
         FROM trip_user
-        WHERE `login` = #{login}
+        WHERE `mobile` = #{login}
     </select>
+
+    <select id="findByMobile" parameterType="String" resultType="TripUser">
+        SELECT
+            `id`,
+            `nickname`,
+            `mobile`,
+            `password`,
+            `gender`
+        FROM trip_user
+        WHERE `mobile` = #{mobile}
+    </select>
+
+    <!-- 插入用户 -->
+    <insert id="insert">
+        INSERT INTO trip_user (
+            `id`,
+            `nickname`,
+            `mobile`,
+            `password`,
+            `gender`,
+            `create_date`,
+            `update_date`,
+            `remarks`
+        ) VALUES (
+            #{id},
+            #{nickname},
+            #{mobile},
+            #{password},
+            #{gender},
+            #{createDate},
+            #{updateDate},
+            #{remarks}
+        )
+    </insert>
+
+    <!-- 更新用户密码 -->
+    <update id="updatePasswordByMobile">
+        UPDATE trip_user
+        SET
+            `password` = #{password}
+        WHERE `mobile` = #{mobile}
+    </update>
 </mapper>

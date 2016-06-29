@@ -1,6 +1,7 @@
 package cn.zhangxd.trip.util;
 
 import java.security.SecureRandom;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -63,11 +64,28 @@ public class RandomHelper {
         return EncodeHelper.encodeBase62(randomBytes);
     }
 
+    /**
+     * 指定位数数字
+     * @param charCount
+     * @return
+     */
+    public static String getRandNum(int charCount) {
+        String charValue = "";
+        for (int i = 0; i < charCount; i++) {
+            char c = (char) (randomInt(0, 10) + '0');
+            charValue += String.valueOf(c);
+        }
+        return charValue;
+    }
+
+    public static int randomInt(int from, int to) {
+        Random r = new Random();
+        return from + r.nextInt(to - from);
+    }
+
     public static void main(String[] args) {
-        System.out.println(RandomHelper.uuid());
-        System.out.println(RandomHelper.randomStringUpper());
         for (int i = 0; i < 1000; i++) {
-            System.out.println(RandomHelper.randomLong() + "  " + RandomHelper.randomBase62(5));
+            System.out.println(getRandNum(4));
         }
     }
 

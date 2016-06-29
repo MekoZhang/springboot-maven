@@ -53,6 +53,10 @@ public class ReturnCode {
      * 401 Token 无效
      */
     public static final String INVALID_TOKEN = "20001";
+    /**
+     * 400 字段校验错误
+     */
+    public static final String INVALID_FIELD = "20002";
 
     /****************************************************/
 
@@ -68,5 +72,27 @@ public class ReturnCode {
      * 400 不支持的 Grant Type
      */
     public static final String UNSUPPORTED_GRANT_TYPE = "30003";
+
+    /****************************************************/
+
+    /**
+     * 401 用户已存在
+     */
+    public static final String USER_EXIST = "30101";
+    /**
+     * 400 用户不存在
+     */
+    public static final String USER_NOT_EXIST = "30102";
+    /**
+     * 403 短信发送太频繁
+     */
+    public static final String SMS_TOO_MUCH = "30103";
+
+    /****************************************************/
+
+    /**
+     * 无效验证码
+     */
+    public static final String INVALID_CAPTCHA = "30201";
 
 }

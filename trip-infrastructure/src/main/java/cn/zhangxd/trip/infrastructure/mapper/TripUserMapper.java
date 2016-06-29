@@ -10,4 +10,7 @@ public interface TripUserMapper extends CrudDao<TripUser> {
 
     TripUser findByLogin(String login);
 
+    TripUser findByMobile(String mobile);
+
+    int updatePasswordByMobile(TripUser tripUser);
 }
