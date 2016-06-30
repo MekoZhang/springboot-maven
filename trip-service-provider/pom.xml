@@ -11,6 +11,10 @@
 
     <artifactId>trip-service-provider</artifactId>
 
+    <properties>
+        <start-class>cn.zhangxd.trip.ProviderApplication</start-class>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>cn.zhangxd</groupId>

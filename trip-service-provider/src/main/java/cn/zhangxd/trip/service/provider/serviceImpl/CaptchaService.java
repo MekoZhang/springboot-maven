@@ -6,7 +6,7 @@ import cn.zhangxd.trip.service.api.exception.*;
 import cn.zhangxd.trip.service.api.service.ICaptchaService;
 import cn.zhangxd.trip.service.api.service.ITripUserService;
 import cn.zhangxd.trip.service.provider.common.service.BaseService;
-import cn.zhangxd.trip.service.provider.thirdapi.sms.SmsService;
+import cn.zhangxd.trip.service.provider.thirdapi.sms.SmsApiService;
 import cn.zhangxd.trip.util.RandomHelper;
 import cn.zhangxd.trip.util.StringHelper;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class CaptchaService extends BaseService implements ICaptchaService {
 
     @Autowired
-    private SmsService smsService;
+    private SmsApiService smsService;
     @Autowired
     private ITripUserService tripUserService;
     @Autowired

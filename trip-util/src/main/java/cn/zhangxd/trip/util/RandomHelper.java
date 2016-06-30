@@ -70,12 +70,12 @@ public class RandomHelper {
      * @return
      */
     public static String getRandNum(int charCount) {
-        String charValue = "";
+        StringBuffer charValue = new StringBuffer();
         for (int i = 0; i < charCount; i++) {
             char c = (char) (randomInt(0, 10) + '0');
-            charValue += String.valueOf(c);
+            charValue.append(String.valueOf(c));
         }
-        return charValue;
+        return charValue.toString();
     }
 
     public static int randomInt(int from, int to) {

@@ -1,5 +1,6 @@
 package cn.zhangxd.trip.util;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
@@ -57,11 +58,11 @@ public class HttpClientUtils {
         HttpUriRequest reqMethod = null;
         if (METHOD_POST.equals(method)) {
             reqMethod = RequestBuilder.post().setUri(url)
-                    .addParameters(params.toArray(new BasicNameValuePair[params.size()]))
+                    .addParameters(params.toArray(new NameValuePair[params.size()]))
                     .setConfig(requestConfig).build();
         } else if (METHOD_GET.equals(method)) {
             reqMethod = RequestBuilder.get().setUri(url)
-                    .addParameters(params.toArray(new BasicNameValuePair[params.size()]))
+                    .addParameters(params.toArray(new NameValuePair[params.size()]))
                     .setConfig(requestConfig).build();
         }
         return reqMethod;
@@ -80,6 +81,10 @@ public class HttpClientUtils {
                     .setConfig(requestConfig).build();
         }
         return reqMethod;
+    }
+
+    public static void main(String[] args) {
+
     }
 
 }

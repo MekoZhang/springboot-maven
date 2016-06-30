@@ -12,7 +12,6 @@ spring:
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    filters: stat
     max-active: 20
     initial-size: 1
     min-idle: 3

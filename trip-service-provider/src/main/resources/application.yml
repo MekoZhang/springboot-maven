@@ -14,7 +14,6 @@ spring:
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    filters: stat
     max-active: 20
     initial-size: 1
     min-idle: 3
@@ -52,3 +51,7 @@ api:
       url: http://gw.api.taobao.com/router/rest
       key: 23393509
       secret: fbee7a46d4fa2341e0baec53c0d027ef
+  hefeng:
+    weather:
+      url: https://api.heweather.com/x3/weather
+      key: 15a3e1ddf6c84ff39025a3d5b180dd46

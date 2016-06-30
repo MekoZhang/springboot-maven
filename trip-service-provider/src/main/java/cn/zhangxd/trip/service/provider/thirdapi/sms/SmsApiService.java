@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
 @Service
 @EnableConfigurationProperties
 @ConfigurationProperties("api.taobao.sms")
-public class SmsService {
+public class SmsApiService {
 
-    private static Logger logger = LoggerFactory.getLogger(SmsService.class);
+    private static Logger logger = LoggerFactory.getLogger(SmsApiService.class);
 
     private static final String BUSINESS_LIMIT_CONTROL = "isv.BUSINESS_LIMIT_CONTROL";
     private static final String MOBILE_NUMBER_ILLEGAL = "isv.MOBILE_NUMBER_ILLEGAL";
