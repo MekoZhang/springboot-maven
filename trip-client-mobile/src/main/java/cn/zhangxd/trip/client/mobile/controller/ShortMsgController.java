@@ -1,5 +1,6 @@
 package cn.zhangxd.trip.client.mobile.controller;
 
+import cn.zhangxd.trip.client.mobile.common.annotation.RequestLimit;
 import cn.zhangxd.trip.client.mobile.common.controller.BaseController;
 import cn.zhangxd.trip.client.mobile.constant.Message;
 import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +30,10 @@ public class ShortMsgController extends BaseController {
     @Autowired
     private ICaptchaService captchaService;
 
+    @RequestLimit(count = 10)
     @RequestMapping(value = "/captcha", method = RequestMethod.POST)
     public Map<String, Object> sendCaptcha(
+            HttpServletRequest request,
             @PathVariable("version") String version,
             @RequestParam("type") String type,
             @RequestParam("mobile") String mobile
