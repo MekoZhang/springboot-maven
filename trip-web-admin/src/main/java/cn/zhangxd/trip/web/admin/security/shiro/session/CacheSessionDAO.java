@@ -42,11 +42,6 @@ public class CacheSessionDAO extends EnterpriseCacheSessionDAO implements Sessio
 			if (Servlets.isStaticFile(uri)){
 				return;
 			}
-			// 如果是视图文件，则不更新SESSION
-			if (StringHelper.startsWith(uri, Global.getConfig("web.view.prefix"))
-					&& StringHelper.endsWith(uri, Global.getConfig("web.view.suffix"))){
-				return;
-			}
 			// 手动控制不更新SESSION
 			String updateSession = request.getParameter("updateSession");
 			if (Global.FALSE.equals(updateSession) || Global.NO.equals(updateSession)){

@@ -40,7 +40,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return new LogInterceptor();
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 配置日志拦截器拦截请求路径

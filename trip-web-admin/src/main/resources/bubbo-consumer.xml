@@ -8,4 +8,7 @@
 
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ISysDictService" id="sysDictService" />
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ISystemService" id="systemService" />
+    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ICmsCategoryService" id="categoryService" />
+    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ICmsArticleService" id="articleService" />
+    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ICmsArticleDataService" id="articleDataService" />
 </beans>

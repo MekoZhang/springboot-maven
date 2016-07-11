@@ -98,3 +98,53 @@ CREATE TABLE `trip_user` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `mobile_UNIQUE` (`mobile` ASC)
 ) COMMENT='用户';
+
+/* CMS Tables */
+DROP TABLE IF EXISTS `cms_category`;
+DROP TABLE IF EXISTS `cms_article`;
+DROP TABLE IF EXISTS `cms_article_data`;
+
+CREATE TABLE `cms_category` (
+  `id` VARCHAR(36) NOT NULL COMMENT '编号',
+  `parent_id` VARCHAR(36) NOT NULL COMMENT '父级编号',
+  `parent_ids` VARCHAR(2000) NOT NULL COMMENT '所有父级编号',
+  `module` VARCHAR(20) COMMENT '模型',
+  `name` VARCHAR(100) NOT NULL COMMENT '名称',
+  `image` VARCHAR(255) COMMENT '缩略图',
+  `href` VARCHAR(255) COMMENT '链接',
+  `description` VARCHAR(255) COMMENT '描述',
+  `keywords` VARCHAR(255) COMMENT '关键字',
+  `sort` INT COMMENT '排序',
+  `create_date` DATETIME NOT NULL COMMENT '创建时间',
+  `update_date` DATETIME NOT NULL COMMENT '更新时间',
+  `remarks` VARCHAR(255) COMMENT '备注信息',
+  `del_flag` CHAR(1) DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`)
+) COMMENT='栏目';
+
+CREATE TABLE `cms_article` (
+  `id` VARCHAR(36) NOT NULL COMMENT '编号',
+  `category_id` VARCHAR(36) NOT NULL COMMENT '栏目编号',
+  `title` VARCHAR(255) NOT NULL COMMENT '标题',
+  `link` VARCHAR(255) COMMENT '链接',
+  `color` VARCHAR(50) COMMENT '标题颜色',
+  `image` VARCHAR(255) COMMENT '缩略图',
+  `keywords` VARCHAR(255) COMMENT '关键字',
+  `description` VARCHAR(255) COMMENT '概要',
+  `weight` INT COMMENT '权重',
+  `create_by` VARCHAR(36) NOT NULL COMMENT '创建人',
+  `create_date` DATETIME NOT NULL COMMENT '创建时间',
+  `update_by` VARCHAR(36) NOT NULL COMMENT '更新人',
+  `update_date` DATETIME NOT NULL COMMENT '更新时间',
+  `remarks` VARCHAR(255) COMMENT '备注',
+  `del_flag` CHAR(1) DEFAULT '0' COMMENT '编号',
+  PRIMARY KEY (`id`)
+) COMMENT '文章';
+
+CREATE TABLE `cms_article_data` (
+  `id` VARCHAR(36) NOT NULL COMMENT '编号',
+  `content` TEXT COMMENT '内容',
+  `copyfrom` VARCHAR(255) COMMENT '来源',
+  `relation` VARCHAR(255) COMMENT '相关文章',
+  PRIMARY KEY (`id`)
+) COMMENT='文章内容';
