@@ -169,9 +169,9 @@
                 <!-- 加载编辑器的容器 -->
                 <script id="container" name="articleData.content" type="text/plain"></script>
                 <!-- 配置文件 -->
-                <script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.config.js"></script>
+                <script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.config.min.js"></script>
                 <!-- 编辑器源码文件 -->
-                <script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.all.js"></script>
+                <script type="text/javascript" src="${ctxStatic}/ueditor/ueditor.all.min.js"></script>
                 <!-- 实例化编辑器 -->
                 <script type="text/javascript">
                     var ue = UE.getEditor('container', {
@@ -186,8 +186,8 @@
                             'directionalityltr', 'directionalityrtl', 'indent', '|',
                             'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
                             'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
-                            'simpleupload', 'insertimage', 'emotion', 'pagebreak', 'template', 'background', '|',
-                            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+                            'simpleupload', 'emotion', 'pagebreak', 'template', '|',
+                            'horizontal', 'date', 'time', 'spechars', '|',
                             'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
                             'print', 'preview', 'searchreplace', 'drafts', 'help'
                         ]]

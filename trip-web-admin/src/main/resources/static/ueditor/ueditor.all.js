@@ -8026,7 +8026,11 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             }
 
             if(serverUrl) {
-                serverUrl = serverUrl + (serverUrl.indexOf('?') == -1 ? '?':'&') + 'action=' + (actionName || '');
+                if ('config' == actionName) {
+                    serverUrl = serverUrl + (serverUrl.indexOf('?') == -1 ? '?':'&') + 'action=' + (actionName || '');
+                } else {
+                    serverUrl = serverUrl + '/' + (actionName || '');
+                }
                 return utils.formatUrl(serverUrl);
             } else {
                 return '';
