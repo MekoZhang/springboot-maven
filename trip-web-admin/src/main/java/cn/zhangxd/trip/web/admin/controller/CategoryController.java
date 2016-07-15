@@ -3,6 +3,8 @@ package cn.zhangxd.trip.web.admin.controller;
 import cn.zhangxd.trip.service.api.entity.CmsCategory;
 import cn.zhangxd.trip.service.api.service.ICmsCategoryService;
 import cn.zhangxd.trip.web.admin.common.web.BaseController;
+import cn.zhangxd.trip.web.admin.utils.upload.FileIndex;
+import cn.zhangxd.trip.web.admin.utils.upload.FileManager;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +34,9 @@ public class CategoryController extends BaseController {
 
     @Autowired
     private ICmsCategoryService categoryService;
+    @Autowired
+    private FileManager fileManager;
+
 
     @ModelAttribute
     public CmsCategory get(@RequestParam(required = false) String id) {
@@ -60,15 +66,30 @@ public class CategoryController extends BaseController {
         CmsCategory parent = categoryService.get(category.getParent().getId());
         category.setParent(parent);
         model.addAttribute("category", category);
+        model.addAttribute("file", fileManager.getFileUrlByRealpath(category.getImage()));
         return "modules/cms/categoryForm";
     }
 
     @RequiresPermissions("cms:category:edit")
     @RequestMapping(value = "save")
-    public String save(CmsCategory category, Model model, RedirectAttributes redirectAttributes) {
+    public String save(CmsCategory category,
+                       @RequestParam(value = "file", required = false) MultipartFile file,
+                       Model model, RedirectAttributes redirectAttributes) {
         if (!beanValidator(model, category)) {
             return form(category, model);
         }
+
+        if (file != null && file.getSize() > 0) {
+            FileIndex ufi = new FileIndex();
+            ufi.setmUpfile(file);
+            ufi.setTruename(file.getOriginalFilename());
+            ufi.setMcode("cms");
+            ufi = fileManager.save(ufi);
+
+            String path = ufi.getPath();
+            category.setImage(path);
+        }
+
         categoryService.save(category);
         addMessage(redirectAttributes, "保存栏目'" + category.getName() + "'成功");
         return "redirect:/cms/category";

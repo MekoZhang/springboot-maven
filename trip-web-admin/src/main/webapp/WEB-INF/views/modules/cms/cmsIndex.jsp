@@ -21,7 +21,7 @@
 		var leftWidth = "160"; // 左侧窗口大小
 		function wSize(){
 			var strs=getWindowSize().toString().split(",");
-			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-5);
+			$("#cmsMenuFrame, #cmsMainFrame, #openClose").height(strs[0]-10);
 			$("#right").width($("body").width()-$("#left").width()-$("#openClose").width()-20);
 		}
 		// 鼠标移动到边界自动弹出左侧菜单

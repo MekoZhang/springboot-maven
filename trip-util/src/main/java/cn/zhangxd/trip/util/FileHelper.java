@@ -757,4 +757,12 @@ public class FileHelper extends FileUtils {
         return null;
     }
 
+    public static String addEndSlash(String name) {
+        return StringHelper.isEmpty(name) || name.endsWith("/") ? name : name + "/";
+    }
+
+    public static String clearEndSlash(String name) {
+        return StringHelper.isEmpty(name) || !name.endsWith("/") ? name : name.substring(0, name.length() - 1);
+    }
+
 }

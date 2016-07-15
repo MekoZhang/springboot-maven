@@ -8,6 +8,8 @@ import cn.zhangxd.trip.service.api.service.ICmsCategoryService;
 import cn.zhangxd.trip.util.StringHelper;
 import cn.zhangxd.trip.web.admin.common.web.BaseController;
 import cn.zhangxd.trip.web.admin.utils.UserUtils;
+import cn.zhangxd.trip.web.admin.utils.upload.FileIndex;
+import cn.zhangxd.trip.web.admin.utils.upload.FileManager;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +43,8 @@ public class ArticleController extends BaseController {
     private ICmsArticleDataService articleDataService;
     @Autowired
     private ICmsCategoryService categoryService;
+    @Autowired
+    private FileManager fileManager;
 
     @ModelAttribute
     public CmsArticle get(@RequestParam(required = false) String id) {
@@ -74,18 +79,33 @@ public class ArticleController extends BaseController {
         }
         article.setArticleData(articleDataService.get(article.getId()));
         model.addAttribute("article", article);
+        model.addAttribute("file", fileManager.getFileUrlByRealpath(article.getImage()));
         return "modules/cms/articleForm";
     }
 
     @RequiresPermissions("cms:article:edit")
     @RequestMapping(value = "save")
-    public String save(CmsArticle article, Model model, RedirectAttributes redirectAttributes) {
+    public String save(CmsArticle article,
+                       @RequestParam(value = "file", required = false) MultipartFile file,
+                       Model model, RedirectAttributes redirectAttributes) {
         if (!beanValidator(model, article)) {
             return form(article, model);
         }
         if (article.getIsNewRecord()) {
             article.setCreateBy(UserUtils.getUser());
         }
+
+        if (file != null && file.getSize() > 0) {
+            FileIndex ufi = new FileIndex();
+            ufi.setmUpfile(file);
+            ufi.setTruename(file.getOriginalFilename());
+            ufi.setMcode("cms");
+            ufi = fileManager.save(ufi);
+
+            String path = ufi.getPath();
+            article.setImage(path);
+        }
+
         article.setUpdateBy(UserUtils.getUser());
         articleService.save(article);
         addMessage(redirectAttributes, "保存文章'" + StringHelper.abbr(article.getTitle(), 50) + "'成功");
