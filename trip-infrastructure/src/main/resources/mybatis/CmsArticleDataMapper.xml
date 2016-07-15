@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangxd.trip.infrastructure.mapper.CmsArticleDataMapper">
+
+    <sql id="cmsArticleDataColumns">
+        a.id AS "id",
+        a.content AS "content",
+        a.copyfrom AS "copyfrom",
+        a.relation AS "relation"
+    </sql>
+
+    <select id="get" resultType="CmsArticleData">
+        SELECT
+        <include refid="cmsArticleDataColumns"/>
+        FROM cms_article_data a
+        WHERE a.id = #{id}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_article_data (
+            id,
+            content,
+            copyfrom,
+            relation
+        ) VALUES (
+            #{id},
+            #{content},
+            #{copyfrom},
+            #{relation}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_article_data
+        SET
+            content = #{content},
+            copyfrom = #{copyfrom},
+            relation = #{relation}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

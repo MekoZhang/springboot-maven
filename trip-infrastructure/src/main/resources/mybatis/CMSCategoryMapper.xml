@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangxd.trip.infrastructure.mapper.CmsCategoryMapper">
+
+    <sql id="cmsCategoryDaoColumns">
+        a.id AS "id",
+        a.parent_id AS "parent.id",
+        a.parent_ids AS "parentIds",
+        a.module AS "module",
+        a.name AS "name",
+        a.image AS "image",
+        a.href AS "href",
+        a.description AS "description",
+        a.keywords AS "keywords",
+        a.sort AS "sort",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "parent.name"
+    </sql>
+
+    <sql id="cmsCategoryDaoJoins">
+        LEFT JOIN cms_category c ON c.id = a.parent_id
+    </sql>
+
+    <select id="get" resultType="CmsCategory">
+        SELECT
+            a.id          AS "id",
+            a.parent_id   AS "parent.id",
+            a.parent_ids  AS "parentIds",
+            a.module      AS "module",
+            a.name        AS "name",
+            a.image       AS "image",
+            a.href        AS "href",
+            a.description AS "description",
+            a.keywords    AS "keywords",
+            a.sort        AS "sort",
+            a.create_date AS "createDate",
+            a.update_date AS "updateDate",
+            a.remarks     AS "remarks",
+            a.del_flag    AS "delFlag"
+        FROM cms_category a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsCategory">
+        SELECT
+        <include refid="cmsCategoryDaoColumns"/>
+        FROM cms_category a
+        <include refid="cmsCategoryDaoJoins"/>
+        <where>
+            a.del_flag = #{delFlag}
+            <if test="parent.id != null and parent.id != ''">
+                AND a.parent_id = #{parent.id}
+            </if>
+        </where>
+        ORDER BY a.sort ASC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_category (
+            id,
+            parent_id,
+            parent_ids,
+            module,
+            name,
+            image,
+            href,
+            description,
+            keywords,
+            sort,
+            create_date,
+            update_date,
+            remarks,
+            del_flag
+        ) VALUES (
+            #{id},
+            #{parent.id},
+            #{parentIds},
+            #{module},
+            #{name},
+            #{image},
+            #{href},
+            #{description},
+            #{keywords},
+            #{sort},
+            #{createDate},
+            #{updateDate},
+            #{remarks},
+            #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_category
+        SET
+
+            parent_id = #{parent.id},
+            parent_ids = #{parentIds},
+            module = #{module},
+            name = #{name},
+            image = #{image},
+            href = #{href},
+            description = #{description},
+            keywords = #{keywords},
+            sort = #{sort},
+            update_date = #{updateDate},
+            remarks = #{remarks},
+            del_flag = #{delFlag}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateParentIds">
+        UPDATE cms_category
+        SET
+            parent_id = #{parent.id},
+            parent_ids = #{parentIds}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE cms_category
+        SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByParentId" resultType="CmsCategory">
+        SELECT
+        <include refid="cmsCategoryDaoColumns"/>
+        FROM cms_category a
+        <include refid="cmsCategoryDaoJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="parent.id != null and parent.id != ''">
+                AND a.parent_id = #{parent.id}
+            </if>
+        </where>
+        order by a.sort
+    </select>
+    <select id="findByParentIdsLike" resultType="CmsCategory">
+        SELECT
+        <include refid="cmsCategoryDaoColumns"/>
+        FROM cms_category a
+        <include refid="cmsCategoryDaoJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            AND a.parent_id LIKE CONCAT('%', #{id}, '%')
+        </where>
+        order by a.sort
+    </select>
+
+</mapper>

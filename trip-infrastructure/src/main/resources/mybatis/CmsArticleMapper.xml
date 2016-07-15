@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangxd.trip.infrastructure.mapper.CmsArticleMapper">
+
+    <sql id="cmsArticleColumns">
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.link AS "link",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "createBy.name"
+    </sql>
+
+    <sql id="cmsArticleJoins">
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_user u ON u.id = a.create_by
+    </sql>
+
+    <select id="get" resultType="CmsArticle">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsArticle">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        <where>
+            a.del_flag = #{delFlag}
+            <if test="title != null and title != ''">
+                AND a.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category.id != null and category.id != ''">
+                AND (a.category_id = #{category.id}
+                <if test="category.parentIds != null and category.parentIds != ''">
+                    or c.parent_ids like CONCAT('%,', #{category.id}, ',%')
+                </if>)
+            </if>
+            <if test="image != null and image != ''">
+                AND a.image = #{image}
+            </if>
+            <if test="createBy != null and createBy.id != null and createBy.id != ''">
+                AND a.create_by = #{createBy.id}
+            </if>
+        </where>
+        ORDER BY a.weight DESC, a.update_date DESC
+    </select>
+
+    <select id="findAllList" resultType="CmsArticle">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        ORDER BY a.weight DESC, a.update_date DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_article (
+            id,
+            category_id,
+            title,
+            link,
+            color,
+            image,
+            keywords,
+            description,
+            weight,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            del_flag
+        ) VALUES (
+            #{id},
+            #{category.id},
+            #{title},
+            #{link},
+            #{color},
+            #{image},
+            #{keywords},
+            #{description},
+            #{weight},
+            #{createBy.id},
+            #{createDate},
+            #{updateBy.id},
+            #{updateDate},
+            #{remarks},
+            #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_article
+        SET
+            category_id = #{category.id},
+            title = #{title},
+            link = #{link},
+            color = #{color},
+            image = #{image},
+            keywords = #{keywords},
+            description = #{description},
+            weight = #{weight},
+            create_date = #{createDate},
+            update_by = #{updateBy.id},
+            update_date = #{updateDate},
+            remarks = #{remarks},
+            del_flag = #{delFlag}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE cms_article
+        SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

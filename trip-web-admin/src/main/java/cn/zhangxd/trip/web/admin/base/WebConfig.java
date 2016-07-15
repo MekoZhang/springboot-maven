@@ -1,8 +1,6 @@
 package cn.zhangxd.trip.web.admin.base;
 
-import cn.zhangxd.trip.util.NumberHelper;
 import cn.zhangxd.trip.web.admin.base.mapper.JsonMapper;
-import cn.zhangxd.trip.web.admin.base.property.Global;
 import cn.zhangxd.trip.web.admin.common.interceptor.LogInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opensymphony.sitemesh.webapp.SiteMeshFilter;
@@ -12,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 
 import javax.validation.Validator;
@@ -39,7 +35,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public LogInterceptor logInterceptor() {
         return new LogInterceptor();
     }
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -94,13 +89,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/static/")
                 .setCachePeriod(31536000)
         ;
-    }
-
-    @Bean
-    public MultipartResolver getMultipartResolver() {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setMaxUploadSize(NumberHelper.toInt(Global.getConfig("web.maxUploadSize")));
-        return resolver;
     }
 
 }

@@ -5,8 +5,6 @@ import cn.zhangxd.trip.service.api.entity.TripUser;
 import cn.zhangxd.trip.service.api.service.ITripUserService;
 import cn.zhangxd.trip.service.provider.common.service.CrudService;
 import com.alibaba.dubbo.config.annotation.Service;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class TripUserService extends CrudService<TripUserMapper, TripUser> implements ITripUserService {
 
     @Override
-    @Cacheable(value = "tripUser", key = "'tripUser' + #login")
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         TripUser user = dao.findByLogin(login);
         if (user == null) {
@@ -30,14 +27,12 @@ public class TripUserService extends CrudService<TripUserMapper, TripUser> imple
     }
 
     @Override
-    @Cacheable(value = "tripUser", key = "'tripUser' + #mobile")
     public TripUser findUserByMobile(String mobile) {
         return dao.findByMobile(mobile);
     }
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = "tripUser", key = "'tripUser' + #entity.getMobile()")
     public void save(TripUser entity) {
         if (entity.getIsNewRecord()) {
             entity.preInsert();
@@ -47,7 +42,6 @@ public class TripUserService extends CrudService<TripUserMapper, TripUser> imple
 
     @Override
     @Transactional(readOnly = false)
-    @CacheEvict(value = "tripUser", key = "'tripUser' + #entity.getMobile()")
     public void updatePasswordByMobile(TripUser entity) {
         dao.updatePasswordByMobile(entity);
     }
