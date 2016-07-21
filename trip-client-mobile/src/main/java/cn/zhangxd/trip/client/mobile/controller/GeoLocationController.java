@@ -36,7 +36,7 @@ public class GeoLocationController extends BaseController {
     @ExceptionHandler(ReverseGeoException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleReverseGeoException(ReverseGeoException ex) {
-        return makeErrorMessage(ReturnCode.INVALID_FIELD, "Cannot Reverse Geolocation", ex.getMessage());
+        return makeErrorMessage(ReturnCode.CANNOT_REVERSE_GEO, "Cannot Reverse Geolocation", ex.getMessage());
     }
 
 }
