@@ -4,12 +4,11 @@ import cn.zhangxd.trip.client.mobile.common.controller.BaseController;
 import cn.zhangxd.trip.client.mobile.constant.Message;
 import cn.zhangxd.trip.client.mobile.constant.ReturnCode;
 import cn.zhangxd.trip.service.api.entity.Weather;
+import cn.zhangxd.trip.service.api.exception.GetWeatherException;
 import cn.zhangxd.trip.service.api.service.IWeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,10 +32,10 @@ public class WeatherController extends BaseController {
         return message;
     }
 
-//    @ExceptionHandler(UnexpectedTypeException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public Map<String, Object> handleUnexpectedTypeException(UnexpectedTypeException ex) {
-//        return makeErrorMessage(ReturnCode.INVALID_FIELD, "Type Error", ex.getMessage());
-//    }
+    @ExceptionHandler(GetWeatherException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, Object> handleGetWeatherException(GetWeatherException ex) {
+        return makeErrorMessage(ReturnCode.CANNOT_GET_WEATHER, "Cannot Get Weather", ex.getMessage());
+    }
 
 }

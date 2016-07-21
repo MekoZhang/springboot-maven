@@ -37,7 +37,7 @@ spring:
       min-idle: 0 #初始化连接数
   data:
     mongodb:
-      database: test # Database name.
+      database: trip # Database name.
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.
 
@@ -55,3 +55,11 @@ api:
     weather:
       url: https://api.heweather.com/x3/weather
       key: 15a3e1ddf6c84ff39025a3d5b180dd46
+  google:
+    map:
+      key: AIzaSyAI7VcvuL29G6ApZWUYQRQuJV1-Rav7JWM
+  baidu:
+    map:
+      key: WyGjNtedCH8jTgccE7zvRySuPVwhTGR1
+  map:
+    enable: baidu # baidu or google

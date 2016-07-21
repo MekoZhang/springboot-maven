@@ -34,6 +34,6 @@ spring:
       min-idle: 0 #初始化连接数
   data:
     mongodb:
-      database: test # Database name.
+      database: trip # Database name.
       host: localhost # Mongo server host.
       port: 27017 # Mongo server port.

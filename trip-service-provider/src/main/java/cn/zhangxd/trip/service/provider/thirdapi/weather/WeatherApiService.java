@@ -1,6 +1,7 @@
 package cn.zhangxd.trip.service.provider.thirdapi.weather;
 
 import cn.zhangxd.trip.infrastructure.repo.RedisRepo;
+import cn.zhangxd.trip.service.api.exception.GetWeatherException;
 import cn.zhangxd.trip.util.HttpClientUtils;
 import cn.zhangxd.trip.service.provider.thirdapi.weather.WeatherBean.HeWeatherDataServiceBean;
 import cn.zhangxd.trip.util.StringHelper;
@@ -40,7 +41,7 @@ public class WeatherApiService {
     private String key;
     private String url;
 
-    public HeWeatherDataServiceBean get(String city) {
+    public HeWeatherDataServiceBean get(String city) throws GetWeatherException {
 
         try {
             String weatherCache = redisRepo.get(REDIS_PREFIX + city);
@@ -72,22 +73,22 @@ public class WeatherApiService {
                 String status = bean.getStatus();
                 if ("ok".equals(status)) {
                     try {
-                        redisRepo.setExpire(REDIS_PREFIX + city, new Gson().toJson(bean), 3600); //缓存1H
+                        redisRepo.setExpire(REDIS_PREFIX + city, new Gson().toJson(bean), 7200); //缓存2H
                     } catch (Exception e) {
                         logger.error("Redis 异常", e);
                     }
                     return bean;
                 } else {
-                    logger.error("天气接口错误:" + status);
-                    return null;
+                    logger.error(String.format("城市 '%s' 天气获取失败", city));
+                    throw new GetWeatherException(String.format("城市 '%s' 天气获取失败", city));
                 }
             } else {
-                logger.error("天气接口请求失败:" + statusCode);
-                return null;
+                logger.error(String.format("城市 '%s' 天气获取失败", city));
+                throw new GetWeatherException(String.format("城市 '%s' 天气获取失败", city));
             }
         } catch (IOException e) {
-            logger.error("天气接口异常:", e);
-            return null;
+            logger.error(String.format("城市 '%s' 天气获取失败", city));
+            throw new GetWeatherException(String.format("城市 '%s' 天气获取失败", city));
         }
     }
 

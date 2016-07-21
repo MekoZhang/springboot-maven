@@ -95,4 +95,14 @@ public class ReturnCode {
      */
     public static final String INVALID_CAPTCHA = "30201";
 
+    /**
+     * 获取天气失败
+     */
+    public static final String CANNOT_GET_WEATHER = "30301";
+
+    /**
+     *
+     */
+    public static final String CANNOT_REVERSE_GEO = "30401";
+
 }

@@ -9,4 +9,5 @@
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ITripUserService" id="tripUserService" />
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.ICaptchaService" id="captchaService" />
     <dubbo:reference interface="cn.zhangxd.trip.service.api.service.IWeatherService" id="weatherService" />
+    <dubbo:reference interface="cn.zhangxd.trip.service.api.service.IGeoLocationService" id="geoLocationService" />
 </beans>
