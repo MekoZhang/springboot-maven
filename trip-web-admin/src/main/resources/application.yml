@@ -10,5 +10,13 @@ multipart:
   max-request-size: 50Mb # Max request size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
 
 upload:
-  work-folder-name: /Users/zhangxd/files
-  access-url: http://images.192.168.199.237.xip.io:8888
+  #Disk upload
+  #work-folder-name: /Users/zhangxd/files
+
+  #OSS upload
+  endpoint: http://images.zhangxd.cn
+  key: 7kyuBVEdOJM7rXPu
+  secret: dGbZkf07dwBLHAlNAEANOvVSP96HUV
+  bucket: image-voyage
+
+  access-url: http://images.zhangxd.cn

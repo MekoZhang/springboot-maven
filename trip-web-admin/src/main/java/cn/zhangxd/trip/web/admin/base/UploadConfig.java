@@ -1,6 +1,6 @@
 package cn.zhangxd.trip.web.admin.base;
 
-import cn.zhangxd.trip.util.upload.FileOperatorDiskImpl;
+import cn.zhangxd.trip.util.upload.FileOperatorOssImpl;
 import cn.zhangxd.trip.web.admin.utils.upload.FileManager;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,25 +16,55 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("upload")
 public class UploadConfig {
 
-    private String workFolderName;
+    private String endpoint;
+    private String key;
+    private String secret;
+    private String bucket;
     private String accessUrl;
 
     @Bean
     public FileManager fileManager() {
         FileManager fileManager = new FileManager();
-        FileOperatorDiskImpl fileOperator = new FileOperatorDiskImpl();
-        fileOperator.setWorkFolderName(workFolderName);
+        FileOperatorOssImpl fileOperator = new FileOperatorOssImpl();
+        fileOperator.setEndpoint(endpoint);
+        fileOperator.setKey(key);
+        fileOperator.setSecret(secret);
+        fileOperator.setBucket(bucket);
         fileOperator.setAccessUrl(accessUrl);
         fileManager.setFileOperator(fileOperator);
         return fileManager;
     }
 
-    public String getWorkFolderName() {
-        return workFolderName;
+    public String getEndpoint() {
+        return endpoint;
     }
 
-    public void setWorkFolderName(String workFolderName) {
-        this.workFolderName = workFolderName;
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
     }
 
     public String getAccessUrl() {
